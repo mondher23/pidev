@@ -1,0 +1,26 @@
+<table border="1">
+    <tr>
+        <td>id</td>
+        <td>nom</td>
+        <td>prenom</td>
+        <td>photo</td>
+        <td>emplois</td>
+        <td>fonction</td>
+    </tr>
+    {% for personnel in personnels %}
+        <tr>
+            <td>{{ personnel.id }}</td>
+            <td>{{ personnel.nom }}</td>
+            <td>{{ personnel.prenom }}</td>
+            <td><img src="/assets/img/{{personnel.photo}}" alt="{{personnel.photo}}"></td>
+            <td>{{ personnel.emplois }}</td>
+            <td>{{personnel.fonction.getNomF()}}
+            </td>   
+           <td> <a href="{{ path('supprimerPersonnel',{'id':personnel.id}) }}">Delete</a> </td>
+           <td> <a href="{{ path('modifierPersonnel',{'id':personnel.id}) }}">Update</a></td>
+
+            
+        </tr>
+    {% endfor %}
+</table>
+<a href="{{ path('ajouterpersonnel') }}">ajouter personnel</a>
