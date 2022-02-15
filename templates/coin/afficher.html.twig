@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+
+
+
+
+
+ 
+
+
+  {% block body %}
+  <main id="main">
+
+  <section id="events" class="events">
+            
+            <div class="container" data-aos="fade-up">
+                <div class="events-slider swiper" data-aos="fade-up" data-aos-delay="100">           
+                    <div class="swiper-wrapper">       
+                            
+                        {% for coins in coin %}
+                                
+                            <div class="swiper-slide">
+                                <div class="row event-item">
+                                    <div class="col-lg-6">
+                                        <img src="assets\img\about.jpg" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="col-lg-6 pt-4 pt-lg-0 content">
+                                        <h3>{{coins.pays}}</h3>
+                                        <div class="price">
+                                            <p><span>{{coins.getNbPlaces()}}places</span></p>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <a href="{{ path('suppCoin',{'id':coins.id}) }}">supprimer</a>
+                                     <a href="{{ path('modifcoin',{'id':coins.id}) }}">modifier</a>
+                                     <a href="{{ path('listCoins',{'id':coins.id}) }}">afficher</a>
+                                     <a href="{{ path('ajouterC') }}">Ajouter coin</a>
+                             
+                                </div>
+                            </div><!-- End testimonial item -->
+                                
+                        {%endfor%}
+                
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>    
+            </div>
+        </section>
+  </main>
+{% endblock %}
+
+
+
+ 
