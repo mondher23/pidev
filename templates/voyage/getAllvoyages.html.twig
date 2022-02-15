@@ -1,0 +1,11 @@
+{% for voyage in voyages %}
+{{ voyage.getIdV()}}
+{{ voyage.getIdU()}}
+{{ voyage.getIdO()}}
+
+
+{{ voyage.destination}}
+{{ voyage.done}}
+<a href="{{path('updateV',{'id_v': voyage.getIdV()})}}">Update</a>
+<a href="{{path('deleteVoyage',{'id_v': voyage.getIdV()})}}">Delete</a>
+{%endfor%}
