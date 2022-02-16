@@ -47,4 +47,14 @@ class PersonnelRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function listchef(){
+        return $this->createQueryBuilder('p')
+            ->join('p.fonction', 'f')
+            ->addSelect('f')
+            ->where('f.nom_f=:chef ')
+            ->setParameter('chef',"chef")
+            ->getQuery()
+            ->getResult();
+    }
 }

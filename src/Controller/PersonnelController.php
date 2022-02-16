@@ -34,6 +34,16 @@ class PersonnelController extends AbstractController
         $personnels = $this->getDoctrine()->getRepository(Personnel::class)->findAll();
         return $this->render('personnel/list.html.twig', ["personnels" => $personnels]);
     }
+
+     
+    /**
+     * @Route("/listchef", name="listchef")
+     */
+    public function listchef()
+    {
+        $chefs = $this->getDoctrine()->getRepository(Personnel::class)->listchef();
+        return $this->render('personnel/listchef.html.twig', ["chefs" => $chefs]);
+    }
     
 
      /**
