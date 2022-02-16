@@ -55,6 +55,17 @@ class OffreController extends AbstractController
     }
 
     /**
+    * @Route("/listOffresb", name="listOffresb")
+    */
+    public function getOffresb()
+    {
+    $repository =$this->getDoctrine()->getRepository(Offre::class);
+    $offres =$repository-> findAll();
+    return $this-> render ('offre/getAlloffresb.html.twig', [
+    'offres' => $offres]);
+    }
+
+    /**
      * @Route("/upadteO/{id_o}", name="updateO")
      */
     public function updateOffre($id_o,Request $request){

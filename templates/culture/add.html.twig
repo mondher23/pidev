@@ -1,1 +1,94 @@
-{{form(formC)}}
+{% extends 'admin.html.twig' %}
+{% block gestion %}
+              <li class="nav-item menu-open">
+            <a href="#" class="nav-link active" style="background-color: #E5BC4E;">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Gestion des Cultures
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="addC" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Ajouter une Culture</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="listCulturesb" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Consulter les Cultures</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active" style="background-color: #E5BC4E;">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Gestion des Offres
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="addO" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Ajouter une Offre</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="listOffresb" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Consulter les Offres</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active" style="background-color: #E5BC4E;">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Gestion des Voyages
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="addV" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Ajouter un Voyage</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="listVoyages" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Consulter les Voyages</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+{% endblock %}
+{% block titrePage %}
+              <div class="col-sm-6">
+            <h1 class="m-0"> Ajouter une Culture</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"> Gestion des Cultures</li>
+              <li class="breadcrumb-item active"> Ajouter une Culture</li>
+            </ol>
+          </div><!-- /.col -->
+{% endblock %}
+
+{% block body %}
+<form>
+    <div class="card-body">
+        {{form(formC)}}
+    </div>
+</form>
+{% endblock %}

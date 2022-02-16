@@ -18,7 +18,7 @@ class VoyageType extends AbstractType
             ->add('date_dep')
             ->add('heure_dep')
             ->add('destination')
-            ->add('done')
+            
         ;
     }
 

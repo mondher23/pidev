@@ -54,6 +54,17 @@ class CultureController extends AbstractController
     }
 
     /**
+    * @Route("/listCulturesb", name="listCulturesb")
+    */
+    public function getCulturesb()
+    {
+    $repository =$this->getDoctrine()->getRepository(Culture::class);
+    $cultures =$repository-> findAll();
+    return $this-> render ('culture/getAllculturesb.html.twig', [
+    'cultures' => $cultures]);
+    }
+
+    /**
      * @Route("/upadteC/{ref}", name="updateC")
      */
     public function updateCulture($ref,Request $request){
