@@ -53,7 +53,7 @@ class CoinController extends AbstractController
     }
 
     /**
-     * @Route("/modifcoin/{id}", name="modifcoin")
+     * @Route("/modifCoin/{id}", name="modifCoin")
      */
     public function modifierCoin($id,Request $request){
         $coin = $this->getDoctrine()->getRepository(Coin::class)->find($id);
