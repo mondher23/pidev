@@ -55,9 +55,18 @@ class PersonnelController extends AbstractController
         $form = $this->createForm(PersonnelType::class, $personnel);
         $form->add("Ajouter", SubmitType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $photo = $form->get('photo')->getData();
+            $fichier = $personnel->getprenom() . '.' . $photo->guessExtension();
+
+            $photo->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+           $personnel->setPhoto($fichier);
+
             $em = $this->getDoctrine()->getManager();
-            
             $em->persist($personnel);
             $em->flush();
             return $this->redirectToRoute('listPersonnel');
@@ -66,11 +75,12 @@ class PersonnelController extends AbstractController
     }
 
     /**
-     * @Route("/supprimer/{id}", name="supprimerPersonnel")
+     * @Route("/supprimerPersonnel/{id}", name="supprimerPersonnel")
      */
-    public function supprimertudent($id)
+    public function supprimerPersonnel($id)
     {
         $personnel = $this->getDoctrine()->getRepository(Personnel::class)->find($id);
+    
         $em = $this->getDoctrine()->getManager();
         $em->remove($personnel);
         $em->flush();

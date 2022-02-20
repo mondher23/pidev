@@ -15,7 +15,7 @@ class FonctionType extends AbstractType
             ->add('nom_f')
             ->add('salaire')
             ->add('nb_heure')
-            ->add('depenses')
+            
         ;
     }
 

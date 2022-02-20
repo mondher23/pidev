@@ -18,8 +18,12 @@ class PersonnelType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
-            ->add('photo')
-            ->add('emplois')
+            ->add('photo', FileType::class, [
+                'label' => false,
+                'multiple' => false,
+                'mapped' => false,
+                'required' => false
+            ])
             ->add('fonction',EntityType::class,[
                 'class'=>Fonction::class,
                 'choice_label'=>'nom_f',

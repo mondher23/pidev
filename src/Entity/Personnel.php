@@ -4,7 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=PersonnelRepository::class)
  */
@@ -19,11 +19,13 @@ class Personnel
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="nom is required") 
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="PRENOM is required") 
      */
     private $prenom;
 
@@ -32,10 +34,6 @@ class Personnel
      */
     private $photo;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $emplois;
 
     /**
      * @ORM\ManyToOne(targetEntity=Fonction::class, inversedBy="personnels")
