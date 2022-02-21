@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\VoyageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass=VoyageRepository::class)
  */
@@ -19,11 +21,13 @@ class Voyage
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Le champ *ID User* est obligatoire")
      */
     private $id_u;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Le champ *ID Offre* est obligatoire")
      */
     private $id_o;
 
@@ -39,6 +43,7 @@ class Voyage
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le champ *destination* est obligatoire")
      */
     private $destination;
 
@@ -135,4 +140,6 @@ class Voyage
 
         return $this;
     }
+
+
 }

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\CultureRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass=CultureRepository::class)
  */
@@ -13,11 +15,18 @@ class Culture
     /**
      * @ORM\Id
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le champ *référence* est obligatoire")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 5,
+     *      minMessage = "le nom du pays doit contenir au mois 2 caractères",
+     *      maxMessage = "le nom du pays ne peut pas dépasser 5 caractères")
      */
     private $ref;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le champ *pays* est obligatoire")
      */
     private $pays;
 

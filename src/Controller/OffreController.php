@@ -31,12 +31,21 @@ class OffreController extends AbstractController
         $formO=$this->createForm(OffreType::class, $offre);
         $formO->add('Ajouter',SubmitType::class);
         $formO->handleRequest($request);
-    if ($formO->isSubmitted()) {
+    if ($formO->isSubmitted()&&$formO->isValid()) {
+
+        $image = $formO->get('image')->getData();
+            $fichier = $offre->getTitre() . '.' . $image->guessExtension();
+
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+           $offre->setImage($fichier);
     $em= $this->getDoctrine()->getManager();
     $offre->setExpire(0);
     $em->persist ($offre);
     $em-> flush();
-    return $this->redirectToRoute('listOffres');
+    return $this->redirectToRoute('listOffresb');
     }
     return $this->render('offre/add.html.twig', [
     'formO' => $formO->Createview(),
@@ -49,7 +58,7 @@ class OffreController extends AbstractController
     public function getOffres()
     {
     $repository =$this->getDoctrine()->getRepository(Offre::class);
-    $offres =$repository-> findAll();
+    $offres =$repository-> listOffresDispo();
     return $this-> render ('offre/getAlloffres.html.twig', [
     'offres' => $offres]);
     }
@@ -73,11 +82,21 @@ class OffreController extends AbstractController
         $formO=$this->createForm(OffreType::class, $offre);
         $formO->add('Modifier',SubmitType::class);
         $formO->handleRequest($request);
-    if ($formO->isSubmitted()) {
+    if ($formO->isSubmitted()&&$formO->isValid()) {
+        
+
+        $image = $formO->get('image')->getData();
+            $fichier = $offre->getRef() . 'mod.' . $image->guessExtension();
+
+            $image->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+           $offre->setImage($fichier);
     $em= $this->getDoctrine()->getManager();
 
     $em-> flush();
-    return $this->redirectToRoute('listOffres');
+    return $this->redirectToRoute('listOffresb');
     }
     return $this->render('offre/update.html.twig', [
     'formO' => $formO->Createview(),
@@ -94,6 +113,6 @@ class OffreController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($offre);
         $em->flush();
-        return $this->redirectToRoute("listOffres");
+        return $this->redirectToRoute("listOffresb");
     }
 }

@@ -148,13 +148,16 @@
                                 <h3>{{culture.pays}}</h3>
                                 <p class="fst-italic">{{culture.texte}}</p>
                                 <p>{{culture.flag}}</p>
-                                <a href="{{path('updateC',{'ref': culture.ref})}}">Update</a>
-                                <a href="{{path('deleteCulture',{'ref': culture.ref})}}">Delete</a>
+
+                                
+                                
                             </div>
                             <div class="col-lg-4 text-center order-1 order-lg-2">
-                                <img src="assets/img/{{culture.flag}}" alt="" class="img-fluid">
+                                <img src="uploads/{{culture.flag}}" alt="" class="img-fluid">
                             </div>
+                            
                         </div>
+                        <p class="h6" style="color: #cda45e;">Ajouté le {{culture.getDateAjout()|date('d-m-Y')}}</p>
                     </div>
                 {%endfor%}
               

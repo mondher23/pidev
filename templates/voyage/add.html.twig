@@ -85,9 +85,29 @@
           </div><!-- /.col -->
 {% endblock %}
 {% block body %}
-<form>
+
     <div class="card-body">
-        {{form(formV)}}
+        {{ form_start(formV,{'attr': {'novalidate': 'novalidate'}} ) }}
+          {{ form_errors(formV.id_u) }}
+          {{ form_errors(formV.id_o) }}
+          {{ form_errors(formV.destination) }}
+        <div class="form-group">
+          {{ form_label(formV.id_u,"ID User") }}
+          {{ form_widget(formV.id_u)}}
+        </div>
+        <div class="form-group">
+          {{ form_label(formV.id_o,"ID Offre") }}
+          {{ form_widget(formV.id_o)}}
+        </div>
+        <div class="form-group">
+          {{ form_label(formV.destination,"Destination") }}
+          {{ form_widget(formV.destination)}}
+        </div>
+        
+        {{form_rest(formV)}}
+        {{ form_end(formV) }}
+        <a href="{{ path('listVoyages') }}" >Retour à la Liste</a>
     </div>
-</form>
+
+
 {% endblock %}

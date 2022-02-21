@@ -5,7 +5,10 @@ namespace App\Form;
 use App\Entity\Culture;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class CultureType extends AbstractType
 {
@@ -15,8 +18,11 @@ class CultureType extends AbstractType
             ->add('ref')
             ->add('pays')
             ->add('texte')
-            ->add('date_ajout')
-            ->add('flag')
+            ->add('flag', FileType::class, [
+                'label' => false,
+                'multiple' => false,
+                'mapped' => false,
+                'required' => false])
         ;
     }
 

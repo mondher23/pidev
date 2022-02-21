@@ -3,7 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\OffreRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\MoreThanOrEqual;
 
 /**
  * @ORM\Entity(repositoryClass=OffreRepository::class)
@@ -19,6 +23,7 @@ class Offre
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="le Titre est Obligatoire")
      */
     private $titre;
 
@@ -29,6 +34,8 @@ class Offre
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Le champ *remise* est obligatoire")
+     * @Assert\LessThanOrEqual(100,message="la remise doit etre inferieure ou egale a 100")
      */
     private $remise;
 
@@ -39,6 +46,8 @@ class Offre
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Le champ *date d'expiration* est obligatoire")
+     * @Assert\GreaterThan("today")
      */
     private $exp_date;
 
@@ -131,4 +140,5 @@ class Offre
 
         return $this;
     }
+
 }

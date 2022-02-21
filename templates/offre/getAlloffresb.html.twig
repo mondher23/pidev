@@ -85,4 +85,44 @@
           </div><!-- /.col -->
 {% endblock %}
 {% block body %}
+    
+          <div class="card">
+              
+              <!-- /.card-header -->
+              <div class="card-body">
+              
+                <table class="table table-bordered table-striped">
+                  <thead class="table-dark" style="background-color: #4f5962;">
+                  <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>description</th>
+                    <th>Remise</th>
+                    <th>Image</th>
+                    <th>Date d'expiration</th>
+                    <th>Expiré</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for offre in offres %}
+                  <tr>
+                    <td>{{offre.getidO()}}</td>
+                    <td>{{offre.titre}}</td>
+                    <td>{{offre.description}}</td>
+                    <td>{{offre.remise}}%</td>
+                    <td>{{offre.image}}</td>
+                    <td>{{offre.getExpDate()|date('d M Y')}}</td>
+                    <td>{{offre.expire}}</td>
+                    <td><a href="{{path('updateO',{'id_o': offre.getidO()})}}" type="button" class="btn btn-secondary">Update</a>
+                        <a href="{{path('deleteOffre',{'id_o': offre.getidO()})}}" type="button" class="btn btn-danger">Delete</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+                <a href="{{ path('addO') }}" >Nouvelle Offre</a>
+              </div>
+              <!-- /.card-body -->
+            </div>
 {% endblock %}

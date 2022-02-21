@@ -84,3 +84,45 @@
             </ol>
           </div><!-- /.col -->
 {% endblock %}
+{% block body %}
+    
+          <div class="card">
+              
+              <!-- /.card-header -->
+              <div class="card-body">
+              
+                <table class="table table-bordered table-striped">
+                  <thead class="table-dark" style="background-color: #4f5962;">
+                  <tr>
+                    <th>ID</th>
+                    <th>ID user</th>
+                    <th>ID offre</th>
+                    <th>Date de départ</th>
+                    <th>Heure de départ</th>
+                    <th>Destination</th>
+                    <th>Effectué</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for voyage in voyages %}
+                  <tr>
+                    <td>{{voyage.getidV()}}</td>
+                    <td>{{voyage.getidU()}}</td>
+                    <td>{{voyage.getidO()}}</td>
+                    <td>{{voyage.getDateDep()|date('d M Y')}}</td>
+                    <td>{{voyage.getHeureDep()|date('h:i')}}</td>
+                    <td>{{voyage.destination}}</td>
+                    <td>{{voyage.done}}</td>
+                    <td><a href="{{path('updateV',{'id_v': voyage.getidV()})}}" type="button" class="btn btn-secondary">Update</a>
+                        <a href="{{path('deleteVoyage',{'id_v': voyage.getidV()})}}" type="button" class="btn btn-danger">Delete</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+                <a href="{{ path('addV') }}" >Nouveau Voyage</a>
+              </div>
+              <!-- /.card-body -->
+            </div>
+{% endblock %}

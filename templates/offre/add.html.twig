@@ -87,9 +87,27 @@
 
 
 {% block body %}
-<form>
     <div class="card-body">
-        {{form(formO)}}
+        {{ form_start(formO,{'attr': {'novalidate': 'novalidate'}} ) }}
+          {{ form_errors(formO.titre) }}
+          {{ form_errors(formO.remise) }}
+          {{ form_errors(formO.exp_date) }}
+        <div class="form-group">
+          {{ form_label(formO.titre,"Titre") }}
+          {{ form_widget(formO.titre)}}
+        </div>
+        <div class="form-group">
+          {{ form_label(formO.remise,"Remise") }}
+          {{ form_widget(formO.remise)}}
+        </div>
+        <div class="form-group">
+          {{ form_label(formO.exp_date,"Date d'expiration") }}
+          {{ form_widget(formO.exp_date)}}
+        </div>
+        
+        {{form_rest(formO)}}
+        {{ form_end(formO) }}
+                <a href="{{ path('listOffresb') }}" >Retour à la Liste</a>
     </div>
-</form>
+
 {% endblock %}

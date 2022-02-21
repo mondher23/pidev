@@ -85,4 +85,40 @@
           </div><!-- /.col -->
 {% endblock %}
 {% block body %}
+          <div class="card">
+              
+              <!-- /.card-header -->
+              <div class="card-body">
+              
+                <table class="table table-bordered table-striped">
+                  <thead class="table-dark" style="background-color: #4f5962;">
+                  <tr>
+                    <th>Référence</th>
+                    <th>Pays</th>
+                    <th>Date d'ajout</th>
+                    <th>Texte</th>
+                    <th>Image</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for culture in cultures %}
+                  <tr>
+                    <td>{{culture.ref}}</td>
+                    <td>{{culture.pays}}</td>
+                    <td>{{culture.getDateAjout()|date('d M Y')}}</td>
+                    <td>{{culture.texte}}</td>
+                    <td>{{culture.flag}}</td>
+                    <td>
+                        <a href="{{path('updateC',{'ref': culture.ref})}}" type="button" class="btn btn-secondary">Update</a>
+                        <a href="{{path('deleteCulture',{'ref': culture.ref})}}" type="button" class="btn btn-danger">Delete</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+                <a href="{{ path('addC') }}" >Nouvelle Culture</a>
+              </div>
+              <!-- /.card-body -->
+            </div>
 {% endblock %}

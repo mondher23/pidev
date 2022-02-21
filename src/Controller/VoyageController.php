@@ -31,7 +31,7 @@ class VoyageController extends AbstractController
         $formV=$this->createForm(VoyageType::class, $voyage);
         $formV->add('Ajouter',SubmitType::class);
         $formV->handleRequest($request);
-    if ($formV->isSubmitted()) {
+    if ($formV->isSubmitted()&&$formV->isValid()) {
     $em= $this->getDoctrine()->getManager();
     $voyage->setDone(0);
     $em->persist ($voyage);
@@ -63,7 +63,7 @@ class VoyageController extends AbstractController
         $formV=$this->createForm(VoyageType::class, $voyage);
         $formV->add('Modifier',SubmitType::class);
         $formV->handleRequest($request);
-    if ($formV->isSubmitted()) {
+    if ($formV->isSubmitted()&&$formV->isValid()) {
     $em= $this->getDoctrine()->getManager();
     $em-> flush();
     return $this->redirectToRoute('listVoyages');

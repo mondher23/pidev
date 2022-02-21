@@ -132,7 +132,7 @@
                             <div class="swiper-slide">
                                 <div class="row event-item">
                                     <div class="col-lg-6">
-                                        <img src="assets/img/{{offre.image}}" class="img-fluid" alt="">
+                                        <img src="uploads/{{offre.image}}" class="img-fluid" alt="">
                                     </div>
                                     <div class="col-lg-6 pt-4 pt-lg-0 content">
                                         <h3>{{offre.titre}}</h3>
@@ -150,11 +150,11 @@
                                             {{offre.description}}
                                         </p>
 
-                                        <p>
-                                            <a href="{{ path('addO') }}">Nouvelle Offre</a>
-                                        </p>
+                                        
                                     </div>
-                             
+                                    <h3  class="h6" style="color: #cda45e;"> 
+                                    Dernier jour : {{offre.getExpDate()|date('d-m-Y')}}
+                                    </h3>
                                 </div>
                             </div><!-- End testimonial item -->
                                 

@@ -31,11 +31,21 @@ class CultureController extends AbstractController
         $formC=$this->createForm(CultureType::class, $culture);
         $formC->add('Ajouter',SubmitType::class);
         $formC->handleRequest($request);
-    if ($formC->isSubmitted()) {
+    if ($formC->isSubmitted()&&$formC->isValid()) {
+
+        $flag = $formC->get('flag')->getData();
+            $fichier = $culture->getPays() . '.' . $flag->guessExtension();
+
+            $flag->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+           $culture->setFlag($fichier);
     $em= $this->getDoctrine()->getManager();
+    $culture->setDateAjout(new \DateTime('now'));
     $em->persist ($culture);
     $em-> flush();
-    return $this->redirectToRoute('listCultures');
+    return $this->redirectToRoute('listCulturesb');
     }
     return $this->render('culture/add.html.twig', [
     'formC' => $formC->Createview(),
@@ -72,10 +82,19 @@ class CultureController extends AbstractController
         $formC=$this->createForm(CultureType::class, $culture);
         $formC->add('Modifier',SubmitType::class);
         $formC->handleRequest($request);
-    if ($formC->isSubmitted()) {
+    if ($formC->isSubmitted()&&$formC->isValid()) {
+        
+        $flag = $formC->get('flag')->getData();
+            $fichier = $culture->getPays() . 'mod.' . $flag->guessExtension();
+
+            $flag->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+           $culture->setFlag($fichier);
     $em= $this->getDoctrine()->getManager();
     $em-> flush();
-    return $this->redirectToRoute('listCultures');
+    return $this->redirectToRoute('listCulturesb');
     }
     return $this->render('culture/update.html.twig', [
     'formC' => $formC->Createview(),
@@ -92,7 +111,7 @@ class CultureController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($culture);
         $em->flush();
-        return $this->redirectToRoute("listCultures");
+        return $this->redirectToRoute("listCulturesb");
     }
 
 

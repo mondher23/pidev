@@ -86,9 +86,25 @@
 {% endblock %}
 
 {% block body %}
-<form>
+
     <div class="card-body">
-        {{form(formC)}}
+          {{ form_start(formC,{'attr': {'novalidate': 'novalidate'}} ) }}
+          {{ form_errors(formC.ref) }}
+          {{ form_errors(formC.pays) }}
+        <div class="form-group">
+          {{ form_label(formC.ref,"Référence") }}
+          {{ form_widget(formC.ref)}}
+        </div>
+        <div class="form-group">
+          {{ form_label(formC.pays,"Pays") }}
+          {{ form_widget(formC.pays)}}
+        </div>
+        
+        {{form_rest(formC)}}
+        {{ form_end(formC) }}
+        
+    <a href="{{ path('listCulturesb') }}" >Retour à la Liste</a>
     </div>
-</form>
+
+
 {% endblock %}
