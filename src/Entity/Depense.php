@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\DepenseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,11 +32,15 @@ class Depense
 
     /**
      * @ORM\Column(type="date")
+     *  @Assert\NotBlank(message="Le champ date est obligatoire")
+     * @Assert\LessThan("today")
      */
     private $date;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank(message="Le champ montant est obligatoire")
+     * @Assert\GreaterThanOrEqual(50,message="le montant doit etre supérieure ou egale a 50")
      */
     private $montant;
 

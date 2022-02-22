@@ -70,19 +70,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="addV" class="nav-link">
+                <a href="../ajoutersalaire" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Ajouter un salaire</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="addV" class="nav-link">
+                <a href="../ajouterfacture" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Ajouter une facture</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="listVoyages" class="nav-link">
+                <a href="../listDepense" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Consulter les Depenses</p>
                 </a>
@@ -103,7 +103,18 @@
           </div><!-- /.col -->
 {% endblock %}
 {% block body %}
-{{form(form)}}
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+
+{{ form_errors(form.nom_f) }}
+{{ form_label(form.nom_f,"nom de la fonction") }}
+{{ form_widget(form.nom_f)}}
+{{ form_errors(form.salaire) }}
+{{ form_label(form.salaire,"salaire") }}
+{{ form_widget(form.salaire)}}
+{{ form_errors(form.nb_heure) }}
+{{ form_label(form.nb_heure,"nb_heure") }}
+{{ form_widget(form.nb_heure)}}
+{{ form_end(form) }}
 {% endblock %}
 
 {% block js %}

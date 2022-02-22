@@ -45,13 +45,14 @@ class DepensesController extends AbstractController
             'class'=>Fonction::class,
             'choice_label'=>'salaire',
             'expanded'=>false,
+            'mapped'=>false,
             'multiple'=>false
         ]);
-
         $form->add("Ajouter", SubmitType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            $depense->setMontant($form->get('photo')->getData());
+        if ($form->isSubmitted() && $form->isValid()) {
+            $fonction =  $form->get('fonction')->getdata();
+            $depense->setMontant($fonction->getSalaire());
             $depense->setType("salaire");
             $em = $this->getDoctrine()->getManager();
             $em->persist($depense);
@@ -61,22 +62,23 @@ class DepensesController extends AbstractController
         return $this->render("depenses/ajoutersalaire.html.twig", array('form' => $form->createView()));
     }
      /**
-     * @Route("/ajouterdepense", name="ajouterdepense")
+     * @Route("/ajouterfacture", name="ajouterfacture")
      */
-    public function ajouterdepense(Request $request)
+    public function ajouterfacture(Request $request)
     {
         $depense = new depense();
         $form = $this->createForm(DepenseType::class, $depense);
+        $form->add('montant');
         $form->add("Ajouter", SubmitType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $depense->setType("facture");
             $em = $this->getDoctrine()->getManager();
-            
             $em->persist($depense);
             $em->flush();
             return $this->redirectToRoute('listDepense');
         }
-        return $this->render("depenses/ajouter.html.twig", array('form' => $form->createView()));
+        return $this->render("depenses/ajouterfacture.html.twig", array('form' => $form->createView()));
     }
 
     /**
@@ -92,21 +94,49 @@ class DepensesController extends AbstractController
     } 
 
      /**
-     * @Route("/modifierDepense/{id}", name="modifierDepense")
+     * @Route("/modifiersalaire/{id}", name="modifiersalaire")
+     */
+    public function modifiersalaire(Request $request, $id)
+    {
+        $depense = $this->getDoctrine()->getRepository(Depense::class)->find($id);
+        $form = $this->createForm(DepenseType::class, $depense);
+        $form->add('fonction',EntityType::class,[
+            'class'=>Fonction::class,
+            'choice_label'=>'salaire',
+            'expanded'=>false,
+            'mapped'=>false,
+            'multiple'=>false
+        ]);
+        $form->add("Modifier", SubmitType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $fonction =  $form->get('fonction')->getdata();
+            $depense->setMontant($fonction->getSalaire());
+            $depense->setType("salaire");
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirectToRoute('listDepense');
+        }
+        return $this->render("depenses/modifiersalaire.html.twig", array('form' => $form->createView()));
+    }
+  
+     /**
+     * @Route("/modifierfacture/{id}", name="modifierfacture")
      */
     public function modifierDepense(Request $request, $id)
     {
         $depense = $this->getDoctrine()->getRepository(Depense::class)->find($id);
         $form = $this->createForm(DepenseType::class, $depense);
+        $form->add('montant');
         $form->add("Modifier", SubmitType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $depense->setType("facture");
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute('listDepense');
         }
-        return $this->render("depense/modifier.html.twig", array('form' => $form->createView()));
+        return $this->render("depenses/modifierfacture.html.twig", array('form' => $form->createView()));
     }
-
 
 }

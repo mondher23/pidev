@@ -44,7 +44,7 @@ class FonctionController extends AbstractController
         $form = $this->createForm(FonctionType::class, $fonction);
         $form->add("Ajouter", SubmitType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             
             $em->persist($fonction);
@@ -75,7 +75,7 @@ class FonctionController extends AbstractController
         $form = $this->createForm(FonctionType::class, $fonction);
         $form->add("Modifier", SubmitType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted()&& $form->isValid())  {
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute('listFonction');

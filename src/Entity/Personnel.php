@@ -19,13 +19,13 @@ class Personnel
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="nom is required") 
+     * @Assert\NotBlank(message="le nom est obligatoire") 
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank(message="PRENOM is required") 
+     * @Assert\NotBlank(message=" le champ PRENOM est obligatoire") 
      */
     private $prenom;
 

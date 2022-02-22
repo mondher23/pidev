@@ -1,0 +1,117 @@
+{% extends 'admin.html.twig' %}
+{% block gestion %}
+              <li class="nav-item menu-open">
+            <a href="#" class="nav-link active" style="background-color: #E5BC4E;">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                Gestion des Personnels
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="ajouterpersonnel" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Ajouter un Personnel</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="listPersonnel" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Consulter les Personnels</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active" style="background-color: #E5BC4E;">
+              <i class="nav-icon fas fa-percentage"></i>
+              <p>
+                Gestion des Fonction
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="ajouterfonction" class="nav-link a">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Ajouter une Fonction</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="listFonction" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Consulter les Fonction</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active" style="background-color: #E5BC4E;">
+              <i class="nav-icon fas fa-fighter-jet"></i>
+              <p>
+                Gestion des Depenses
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="ajoutersalaire" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Ajouter un salaire</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="ajouterfacture" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Ajouter une facture</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="listDepense" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Consulter les Depenses</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+{% endblock %}
+{% block titrePage %}
+              <div class="col-sm-6">
+            <h1 class="m-0"> Ajouter un salaire</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"> Gestion des Depenses</li>
+              <li class="breadcrumb-item active"> Ajouter un salaire</li>
+            </ol>
+          </div><!-- /.col -->
+{% endblock %}
+{% block body %}
+
+<table border="1">
+    <tr>
+        <td>id</td>
+        <td>type</td>
+        <td>date</td>
+        <td>montant</td>
+    </tr>
+    {% for depense in depenses %}
+        <tr>
+            <td>{{ depense.id }}</td>
+            <td>{{ depense.type }}</td>
+            <td>{{ depense.montant }}</td>
+            <td>{{ depense.getDate()|date('d M Y') }}</td>
+             
+           <td> <a href="{{ path('supprimerDepense',{'id':depense.id}) }}">Delete</a> </td>
+           <td> <a href="{{ path('modifiersalaire',{'id':depense.id}) }}">mettre à jour en tant que salaire</a></td>
+           <td> <a href="{{ path('modifierfacture',{'id':depense.id}) }}">mettre à jour en tant que facture</a></td>
+            
+        </tr>
+    {% endfor %}
+</table>
+<a href="{{ path('ajouterfonction') }}">ajouter fonction</a>
+{% endblock %}
