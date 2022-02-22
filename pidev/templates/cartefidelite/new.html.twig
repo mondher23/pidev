@@ -1,0 +1,19 @@
+{% extends 'baseadmin.html.twig' %}
+
+{% block title %}New Cartefidelite{% endblock %}
+
+{% block body %}
+<div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">new Cartefidelite</h3>
+              </div>
+
+
+
+
+    {{ include('cartefidelite/_form.html.twig') }}
+
+    <a href="{{ path('cartefidelite_index') }}">back to list</a>
+{% endblock %}
