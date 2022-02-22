@@ -96,7 +96,16 @@ class PersonnelController extends AbstractController
         $form = $this->createForm(PersonnelType::class, $personnel);
         $form->add("Modifier", SubmitType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted()&& $form->isValid()) {
+         
+            $photo = $form->get('photo')->getData();
+            $fichier = $personnel->getprenom() . '.' . $photo->guessExtension();
+
+            $photo->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+           $personnel->setPhoto($fichier);   
             $em = $this->getDoctrine()->getManager();
             $em->flush();
             return $this->redirectToRoute('listPersonnel');

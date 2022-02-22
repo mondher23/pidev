@@ -55,9 +55,9 @@ class FonctionController extends AbstractController
     }
 
     /**
-     * @Route("/supprimer/{id}", name="supprimerFonction")
+     * @Route("/supprimerFonction/{id}", name="supprimerFonction")
      */
-    public function supprimertudent($id)
+    public function supprimerfonction($id)
     {
         $fonction = $this->getDoctrine()->getRepository(Fonction::class)->find($id);
         $em = $this->getDoctrine()->getManager();

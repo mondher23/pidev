@@ -60,7 +60,13 @@
               <li class="nav-item">
                 <a href="addV" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p> Ajouter une Depense</p>
+                  <p> Ajouter un salaire</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="addV" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Ajouter une facture</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -91,6 +97,7 @@
 {{ form_errors(form.nom) }}
 {{ form_label(form.nom,"nom") }}
 {{ form_widget(form.nom)}}
+{{ form_errors(form.prenom) }}
 {{ form_label(form.prenom,"prenom") }}
 {{ form_widget(form.prenom)}}
 {{form_rest(form)}}

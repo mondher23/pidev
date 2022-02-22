@@ -57,10 +57,16 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+               <li class="nav-item">
+                <a href="addV" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Ajouter un salaire</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="addV" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p> Ajouter une Depense</p>
+                  <p> Ajouter une facture</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -99,7 +105,7 @@
             <td>{{ fonction.id }}</td>
             <td>{{ fonction.getNomF() }}</td>
             <td>{{ fonction.salaire }}</td>
-            <td>{{fonction.getNbHeure()}}</td>
+            <td>{{ fonction.getNbHeure()}}</td>
              
            <td> <a href="{{ path('supprimerFonction',{'id':fonction.id}) }}">Delete</a> </td>
            <td> <a href="{{ path('modifierFonction',{'id':fonction.id}) }}">Update</a></td>

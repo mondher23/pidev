@@ -12,8 +12,9 @@ class DepenseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('type')
-            ->add('fonction')
+
+            ->add('date')
+        
         ;
     }
 

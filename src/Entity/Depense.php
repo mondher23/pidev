@@ -29,6 +29,16 @@ class Depense
      */
     private $fonction;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $montant;
+
     public function __construct()
     {
         $this->fonction = new ArrayCollection();
@@ -71,6 +81,30 @@ class Depense
     public function removeFonction(Fonction $fonction): self
     {
         $this->fonction->removeElement($fonction);
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getMontant(): ?int
+    {
+        return $this->montant;
+    }
+
+    public function setMontant(int $montant): self
+    {
+        $this->montant = $montant;
 
         return $this;
     }
