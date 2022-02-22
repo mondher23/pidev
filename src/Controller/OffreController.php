@@ -34,7 +34,7 @@ class OffreController extends AbstractController
     if ($formO->isSubmitted()&&$formO->isValid()) {
 
         $image = $formO->get('image')->getData();
-            $fichier = $offre->getTitre() . '.' . $image->guessExtension();
+            $fichier = $offre->getid() . '.' . $image->guessExtension();
 
             $image->move(
                 $this->getParameter('images_directory'),
@@ -75,10 +75,10 @@ class OffreController extends AbstractController
     }
 
     /**
-     * @Route("/upadteO/{id_o}", name="updateO")
+     * @Route("/upadteO/{id}", name="updateO")
      */
-    public function updateOffre($id_o,Request $request){
-        $offre = $this->getDoctrine()->getRepository(Offre::class)->find($id_o);
+    public function updateOffre($id,Request $request){
+        $offre = $this->getDoctrine()->getRepository(Offre::class)->find($id);
         $formO=$this->createForm(OffreType::class, $offre);
         $formO->add('Modifier',SubmitType::class);
         $formO->handleRequest($request);
@@ -86,7 +86,7 @@ class OffreController extends AbstractController
         
 
         $image = $formO->get('image')->getData();
-            $fichier = $offre->getRef() . 'mod.' . $image->guessExtension();
+            $fichier = $offre->getid() . 'mod.' . $image->guessExtension();
 
             $image->move(
                 $this->getParameter('images_directory'),
@@ -105,11 +105,11 @@ class OffreController extends AbstractController
 
 
     /**
-    * @Route("/deleteOffre/{id_o}", name="deleteOffre")
+    * @Route("/deleteOffre/{id}", name="deleteOffre")
     */
-    public function deleteOffre($id_o,OffreRepository $repository)
+    public function deleteOffre($id,OffreRepository $repository)
     {
-        $offre = $this->getDoctrine()->getRepository(Offre::class)->find($id_o);
+        $offre = $this->getDoctrine()->getRepository(Offre::class)->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($offre);
         $em->flush();

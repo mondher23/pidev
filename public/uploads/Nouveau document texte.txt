@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\MoreThanOrEqual;
-
+use App\Entity\Voyage;
 /**
  * @ORM\Entity(repositoryClass=OffreRepository::class)
  */
@@ -57,7 +57,7 @@ class Offre
     private $expire;
 
     /**
-     * @ORM\OneToMany(targetEntity=Voyage::class, mappedBy="offre")
+     * @ORM\OneToMany(targetEntity=Voyage::class, mappedBy="offre",cascade={"all"},orphanRemoval=true)
      */
     private $voyages;
 

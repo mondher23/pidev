@@ -56,10 +56,10 @@ class VoyageController extends AbstractController
     }
 
     /**
-     * @Route("/upadteV/{id_v}", name="updateV")
+     * @Route("/upadteV/{id}", name="updateV")
      */
-    public function updateVoyage($id_v,Request $request){
-        $voyage = $this->getDoctrine()->getRepository(Voyage::class)->find($id_v);
+    public function updateVoyage($id,Request $request){
+        $voyage = $this->getDoctrine()->getRepository(Voyage::class)->find($id);
         $formV=$this->createForm(VoyageType::class, $voyage);
         $formV->add('Modifier',SubmitType::class);
         $formV->handleRequest($request);
@@ -75,11 +75,11 @@ class VoyageController extends AbstractController
 
 
     /**
-    * @Route("/deleteVoyage/{id_v}", name="deleteVoyage")
+    * @Route("/deleteVoyage/{id}", name="deleteVoyage")
     */
-    public function deleteVoyage($id_v,VoyageRepository $repository)
+    public function deleteVoyage($id,VoyageRepository $repository)
     {
-        $voyage = $this->getDoctrine()->getRepository(Voyage::class)->find($id_v);
+        $voyage = $this->getDoctrine()->getRepository(Voyage::class)->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($voyage);
         $em->flush();

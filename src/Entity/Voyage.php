@@ -17,7 +17,7 @@ class Voyage
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id_v;
+    private $id;
 
     /**
      * @ORM\Column(type="integer")
@@ -25,11 +25,6 @@ class Voyage
      */
     private $id_u;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Le champ *ID Offre* est obligatoire")
-     */
-    private $id_o;
 
     /**
      * @ORM\Column(type="date")
@@ -52,19 +47,19 @@ class Voyage
      */
     private $done;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Offre::class, inversedBy="voyages")
+     */
+    private $offre;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdV(): ?int
+    public function setId(int $id): self
     {
-        return $this->id_v;
-    }
-
-    public function setIdV(int $id_v): self
-    {
-        $this->id_v = $id_v;
+        $this->id = $id;
 
         return $this;
     }
@@ -81,17 +76,7 @@ class Voyage
         return $this;
     }
 
-    public function getIdO(): ?int
-    {
-        return $this->id_o;
-    }
-
-    public function setIdO(int $id_o): self
-    {
-        $this->id_o = $id_o;
-
-        return $this;
-    }
+    
 
     public function getDateDep(): ?\DateTimeInterface
     {
@@ -137,6 +122,18 @@ class Voyage
     public function setDone(bool $done): self
     {
         $this->done = $done;
+
+        return $this;
+    }
+
+    public function getOffre(): ?Offre
+    {
+        return $this->offre;
+    }
+
+    public function setOffre(?Offre $offre): self
+    {
+        $this->offre = $offre;
 
         return $this;
     }

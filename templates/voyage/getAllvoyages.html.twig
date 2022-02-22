@@ -96,7 +96,7 @@
                   <tr>
                     <th>ID</th>
                     <th>ID user</th>
-                    <th>ID offre</th>
+                    <th>Offre</th>
                     <th>Date de départ</th>
                     <th>Heure de départ</th>
                     <th>Destination</th>
@@ -107,15 +107,15 @@
                   <tbody>
                   {% for voyage in voyages %}
                   <tr>
-                    <td>{{voyage.getidV()}}</td>
+                    <td>{{voyage.getid()}}</td>
                     <td>{{voyage.getidU()}}</td>
-                    <td>{{voyage.getidO()}}</td>
+                    <td>{{voyage.offre.getTitre()}}</td>
                     <td>{{voyage.getDateDep()|date('d M Y')}}</td>
                     <td>{{voyage.getHeureDep()|date('h:i')}}</td>
                     <td>{{voyage.destination}}</td>
                     <td>{{voyage.done}}</td>
-                    <td><a href="{{path('updateV',{'id_v': voyage.getidV()})}}" type="button" class="btn btn-secondary">Update</a>
-                        <a href="{{path('deleteVoyage',{'id_v': voyage.getidV()})}}" type="button" class="btn btn-danger">Delete</a>
+                    <td><a href="{{path('updateV',{'id': voyage.getid()})}}" type="button" class="btn btn-secondary">Update</a>
+                        <a href="{{path('deleteVoyage',{'id': voyage.getid()})}}" type="button" class="btn btn-danger">Delete</a>
                     </td>
                   </tr>
                   {% endfor %}

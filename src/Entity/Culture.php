@@ -27,6 +27,7 @@ class Culture
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le champ *pays* est obligatoire")
+     * @Assert\Regex("/^[A-Z]+/",message="le nom du pays doit commencer par une lettre en majuscule")
      */
     private $pays;
 

@@ -107,15 +107,15 @@
                   <tbody>
                   {% for offre in offres %}
                   <tr>
-                    <td>{{offre.getidO()}}</td>
+                    <td>{{offre.getid()}}</td>
                     <td>{{offre.titre}}</td>
                     <td>{{offre.description}}</td>
                     <td>{{offre.remise}}%</td>
                     <td>{{offre.image}}</td>
                     <td>{{offre.getExpDate()|date('d M Y')}}</td>
                     <td>{{offre.expire}}</td>
-                    <td><a href="{{path('updateO',{'id_o': offre.getidO()})}}" type="button" class="btn btn-secondary">Update</a>
-                        <a href="{{path('deleteOffre',{'id_o': offre.getidO()})}}" type="button" class="btn btn-danger">Delete</a>
+                    <td><a href="{{path('updateO',{'id': offre.getid()})}}" type="button" class="btn btn-secondary">Update</a>
+                        <a href="{{path('deleteOffre',{'id': offre.getid()})}}" type="button" class="btn btn-danger">Delete</a>
                     </td>
                   </tr>
                   {% endfor %}
