@@ -3,8 +3,17 @@
 {% block title %}User index{% endblock %}
 
 {% block body %}
+<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary" style="width: 145rem;">
+              <div class="card-header">
+                <h3 class="card-title">User index</h3>
+              </div>
 
-    <h1>User index</h1>
 
     <table class="table">
         <thead>
@@ -34,7 +43,8 @@
                 <td>{{ user.photo }}</td>
                 <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
                 <td>
-                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a></td>
+                    <td>
                     <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
                 </td>
             </tr>

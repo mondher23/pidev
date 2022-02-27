@@ -79,6 +79,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            
 
             return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -87,6 +88,8 @@ class UserController extends AbstractController
             'user' => $user,
             'form' => $form->createView(),
         ]);
+
+        
     }
 
     /**
