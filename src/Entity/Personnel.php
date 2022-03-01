@@ -82,17 +82,6 @@ class Personnel
         return $this;
     }
 
-    public function getEmplois(): ?string
-    {
-        return $this->emplois;
-    }
-
-    public function setEmplois(string $emplois): self
-    {
-        $this->emplois = $emplois;
-
-        return $this;
-    }
 
     public function getFonction(): ?Fonction
     {

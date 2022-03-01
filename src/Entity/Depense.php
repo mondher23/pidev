@@ -39,7 +39,6 @@ class Depense
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Le champ montant est obligatoire")
      * @Assert\GreaterThanOrEqual(50,message="le montant doit etre supérieure ou egale a 50")
      */
     private $montant;

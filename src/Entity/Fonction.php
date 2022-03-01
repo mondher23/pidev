@@ -6,6 +6,7 @@ use App\Repository\FonctionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,12 +18,14 @@ class Fonction
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le champ nom_f est obligatoire")
+     * @Groups("post:read")
      */
     private $nom_f;
 
@@ -30,6 +33,7 @@ class Fonction
      * @ORM\Column(type="integer")
      * @Assert\GreaterThanOrEqual(450,message="le salaire doit être supérieur ou egale a 450")
      * @Assert\NotBlank(message="Le champ salaire est obligatoire")
+     * @Groups("post:read")
      */
     private $salaire;
 
@@ -40,16 +44,19 @@ class Fonction
      *      min = 40,
      *      max = 65,
      *      notInRangeMessage = "le nombre d'heure doit être entre 40 et 60", )
+     *  @Groups("post:read")
      */
     private $nb_heure;
 
     /**
      * @ORM\OneToMany(targetEntity=Personnel::class, mappedBy="fonction")
+     *  @Groups("post:read")
      */
     private $personnels;
 
     /**
      * @ORM\ManyToMany(targetEntity=Depense::class, mappedBy="fonction")
+     * @Groups("post:read")
      */
     private $depenses;
 
