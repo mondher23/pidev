@@ -10,6 +10,10 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Culture;
 use App\Form\CultureType;
 use App\Repository\CultureRepository;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class CultureController extends AbstractController
 {
@@ -113,6 +117,87 @@ class CultureController extends AbstractController
         $em->flush();
         return $this->redirectToRoute("listCulturesb");
     }
+
+//******************************JSON*********************************************************************
+
+    /**
+    * @Route("/addCultureJSON/new",name="addCultureJSON")
+    */
+
+    public function addCultureJSON(Request $request,NormalizerInterface $Normalizer)
+    {
+	    $em = $this->getDoctrine()->getManager();
+        $culture = new Culture();
+        $culture->setRef($request->get('ref'));
+        $culture->setPays($request->get('pays'));
+        $culture->setTexte($request->get('texte'));
+        $culture->setDateAjout(new \DateTime('now'));
+        $culture->setFlag($request->get('flag'));
+        $em->persist($culture);
+        $em->flush();
+        $jsonContent = $Normalizer->normalize($culture, 'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));;
+    }
+
+    /**
+    * @Route("/listCulturesJSON", name="listCulturesJSON")
+    */
+    public function getCulturesJSON()
+    {   
+        $culture = $this->getDoctrine()
+        ->getManager()->getRepository(Culture::class)->findall();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($culture);
+
+        return new JsonResponse($formatted);
+
+
+
+        //$repository =$this->getDoctrine()->getRepository(Culture::class);
+        //$cultures =$repository-> findAll();
+
+        //$jsonContent = $Normalizer->normalize($cultures, 'json',['groups'=>'post:read']);
+    
+            //return $this-> render ('culture/getAllculturesJSON.html.twig', [
+            //'data' => $jsonContent]);
+    
+        //return new Response(json_encode($jsonContent));;
+    }
+
+    /**
+    * @Route("/updateCultureJSON/{ref}",name="updateCultureJSON")
+    */
+
+    public function updateCultureJSON(Request $request,NormalizerInterface $Normalizer,$ref)
+    {
+	    $em = $this->getDoctrine()->getManager();
+        $culture = $em->getRepository(Culture::class)->find($ref);
+        $culture->setRef($request->get('ref'));
+        $culture->setPays($request->get('pays'));
+        $culture->setTexte($request->get('texte'));
+        $culture->setDateAjout(new \DateTime('now'));
+        $culture->setFlag($request->get('flag'));
+        $em->flush();
+        $jsonContent = $Normalizer->normalize($culture, 'json',['groups'=>'post:read']);
+        return new Response("updated successfully".json_encode($jsonContent));;
+    }
+
+    /**
+    * @Route("/deleteCultureJSON/{ref}", name="deleteCultureJSON")
+    */
+    public function deleteCultureJSON(Request $request,NormalizerInterface $Normalizer,$ref)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $culture = $em->getRepository(Culture::class)->find($ref);
+        $em->remove($culture);
+        $em->flush();
+    
+        $jsonContent = $Normalizer->normalize($culture, 'json',['groups'=>'post:read']);
+        return new Response("deleted successfully".json_encode($jsonContent));;
+    }
+
+
+
 
 
 

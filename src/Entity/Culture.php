@@ -46,10 +46,10 @@ class Culture
      */
     private $flag;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    //public function getId(): ?int
+    //{
+      //  return $this->id;
+    //}
 
     public function getRef(): ?string
     {
