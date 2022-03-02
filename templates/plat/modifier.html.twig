@@ -1,1 +1,112 @@
-{{ form(form) }}
+{% extends 'admin.html.twig' %}
+{% block gestion %}
+              <li class="nav-item menu-open">
+            <a href="#" class="nav-link active" style="background-color: #E5BC4E;">
+              <i class="nav-icon fas fa-store"></i>
+              <p>
+                Gestion des Coins
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="ajouterC" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Ajouter un Coin</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="listCoinsb" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Consulter les Coins</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active" style="background-color: #E5BC4E;">
+              <i class="nav-icon fas fa-burger-soda"></i>
+              <p>
+                Gestion des Plats
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="ajouterP" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Ajouter un Plat</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="listPlatsb" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Consulter les Plats</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active" style="background-color: #E5BC4E;">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>
+                Gestion des Reservations
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="ajouterR" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Ajouter une Reservation </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="listReservations" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p> Consulter les Reservations</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+{% endblock %}
+{% block titrePage %}
+              <div class="col-sm-6">
+            <h1 class="m-0"> AJOUTER UN PLAT </h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"> Gestion des Plats</li>
+              <li class="breadcrumb-item active"> Ajouter un Plat</li>
+            </ol>
+          </div><!-- /.col -->
+{% endblock %}
+
+{% block body %}
+    <div class="card-body">
+        {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+          {{ form_errors(form.nom_p) }}
+          {{ form_errors(form.prix) }}
+          {{ form_errors(form.description) }}
+        <div class="form-group">
+          {{ form_label(form.nom_p,"Nom") }}
+          {{ form_widget(form.nom_p)}}
+        </div>
+        <div class="form-group">
+          {{ form_label(form.prix,"Prix") }}
+          {{ form_widget(form.prix)}}
+        </div>
+        <div class="form-group">
+          {{ form_label(form.description,"Description") }}
+          {{ form_widget(form.description)}}
+        </div>
+        
+        {{form_rest(form)}}
+        {{ form_end(form) }}
+                <a href="{{ path('listPlatsb') }}" >Retour à la Liste</a>
+    </div>
+
+{% endblock %}

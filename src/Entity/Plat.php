@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PlatRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PlatRepository::class)
@@ -18,17 +19,22 @@ class Plat
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $id_p;
-
-    /**
      * @ORM\Column(type="string", length=255)
+     *  @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Le nom ne doit contenir aucun nombre"
+     * )
      */
     private $nom_p;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Range(
+     *      min = 8,
+     *      max = 300,
+     *      notInRangeMessage = "le prix doit etre entre {{ min }}TND et {{ max }}TND "
+     * )
      */
     private $prix;
 
@@ -39,6 +45,7 @@ class Plat
 
     /**
      * @ORM\Column(type="string", length=255)
+     * * @Assert\NotBlank(message="la description est Obligatoire")
      */
     private $description;
 
@@ -47,22 +54,17 @@ class Plat
      */
     private $dispo;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Coin::class, inversedBy="plats")
+     */
+    private $coin;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getIdP(): ?int
-    {
-        return $this->id_p;
-    }
-
-    public function setIdP(int $id_p): self
-    {
-        $this->id_p = $id_p;
-
-        return $this;
-    }
+    
 
     public function getNomP(): ?string
     {
@@ -120,6 +122,18 @@ class Plat
     public function setDispo(bool $dispo): self
     {
         $this->dispo = $dispo;
+
+        return $this;
+    }
+
+    public function getCoin(): ?Coin
+    {
+        return $this->coin;
+    }
+
+    public function setCoin(?Coin $coin): self
+    {
+        $this->coin = $coin;
 
         return $this;
     }

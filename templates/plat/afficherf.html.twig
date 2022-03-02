@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+
+
+  {% block body %}
+  <main id="main">
+ 
+ 
+ <!-- ======= Menu Section ======= -->
+    <section id="menu" class="menu section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Menu</h2>
+          <p>Consultez notre menu savoureux</p>
+        </div>
+
+        
+
+        <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+           {% for plats in plat %}
+           <div class="row" data-aos="fade-up" data-aos-delay="100">
+          
+        </div>
+          <div class="col-lg-6 menu-item filter-starters">
+           <a href="#">PAYS : {{plats.coin.getPays()}}</a>
+            <img src="assets\img\menu\{{plats.getImgP()}}" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">{{plats.getNomP()}}</a><span>{{plats.prix}}TND</span>
+            </div>
+            <div class="menu-ingredients">
+              {{plats.description}}
+            </div>
+          </div>
+           {% endfor %}
+          
+
+        </div>
+
+      </div>
+    </section><!-- End Menu Section -->
+    </main>
+    {% endblock %}

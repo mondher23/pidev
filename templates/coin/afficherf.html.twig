@@ -1,12 +1,6 @@
 {% extends "base.html.twig" %}
 
 
-
-
-
- 
-
-
   {% block body %}
   <main id="main">
 
@@ -21,7 +15,7 @@
                             <div class="swiper-slide">
                                 <div class="row event-item">
                                     <div class="col-lg-6">
-                                        <img src="assets\img\about.jpg" class="img-fluid" alt="">
+                                        <img src="assets\img\{{coins.img}}" class="img-fluid" alt="">
                                     </div>
                                     <div class="col-lg-6 pt-4 pt-lg-0 content">
                                         <h3>{{coins.pays}}</h3>
@@ -31,15 +25,12 @@
                                         
                                     </div>
                                     
-                                    <a href="{{ path('suppCoin',{'id':coins.id}) }}">supprimer</a>
-                                     <a href="{{ path('modifcoin',{'id':coins.id}) }}">modifier</a>
-                                     <a href="{{ path('listCoins',{'id':coins.id}) }}">afficher</a>
-                                     <a href="{{ path('ajouterC') }}">Ajouter coin</a>
+                                    
                              
                                 </div>
                             </div><!-- End testimonial item -->
                                 
-                        {%endfor%}
+                        {% endfor %}
                 
                     </div>
                     <div class="swiper-pagination"></div>

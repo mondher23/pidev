@@ -30,11 +30,11 @@ class PlatController extends AbstractController
         $form=$this->createForm(PlatType::class, $plat);
         $form->add('Ajouter',SubmitType::class);
         $form->handleRequest($request);
-    if ($form->isSubmitted()) {
+    if (($form->isSubmitted())&&($form->isValid()))  {
     $em= $this->getDoctrine()->getManager();
     $em->persist ($plat);
     $em-> flush();
-    return $this->redirectToRoute('listPlats');
+    return $this->redirectToRoute('listPlatsb');
     }
     return $this->render('plat/ajouter.html.twig', [
     'form' => $form->Createview(),
@@ -42,13 +42,24 @@ class PlatController extends AbstractController
     }
 
     /**
-    * @Route("/listPlats", name="listPlats")
+    * @Route("/listPlatsf", name="listPlatsf")
     */
-    public function afficherPlats()
+    public function afficherfPlats()
     {
     $repository =$this->getDoctrine()->getRepository(Plat::class);
     $plat =$repository-> findAll();
-    return $this-> render ('plat/afficher.html.twig', [
+    return $this-> render ('plat/afficherf.html.twig', [
+    'plat' => $plat]);
+    }
+
+    /**
+    * @Route("/listPlatsb", name="listPlatsb")
+    */
+    public function afficherbPlats()
+    {
+    $repository =$this->getDoctrine()->getRepository(Plat::class);
+    $plat =$repository-> findAll();
+    return $this-> render ('plat/afficherb.html.twig', [
     'plat' => $plat]);
     }
 
@@ -56,14 +67,14 @@ class PlatController extends AbstractController
      * @Route("/modifPlat/{id}", name="modifPlat")
      */
     public function modifierPlat($id,Request $request){
-        $coin = $this->getDoctrine()->getRepository(Plat::class)->find($id);
+        $plat = $this->getDoctrine()->getRepository(Plat::class)->find($id);
         $form=$this->createForm(PlatType::class, $plat);
         $form->add('Modifier',SubmitType::class);
         $form->handleRequest($request);
-    if ($form->isSubmitted()) {
+    if(($form->isSubmitted())&&($form->isValid())) {
     $em= $this->getDoctrine()->getManager();
     $em-> flush();
-    return $this->redirectToRoute('listPlats');
+    return $this->redirectToRoute('listPlatsb');
     }
     return $this->render('plat/modifier.html.twig', [
     'form' => $form->Createview(),
@@ -76,11 +87,11 @@ class PlatController extends AbstractController
     */
     public function supprimerPlat($id,PlatRepository $repository)
     {
-        $coin = $this->getDoctrine()->getRepository(Plat::class)->find($id);
+        $plat = $this->getDoctrine()->getRepository(Plat::class)->find($id);
         $em = $this->getDoctrine()->getManager();
         $em->remove($plat);
         $em->flush();
-        return $this->redirectToRoute("listPlats");
+        return $this->redirectToRoute("listPlatsb");
     }
 
 

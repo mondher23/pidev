@@ -11,7 +11,7 @@ use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 
-class CultureController extends AbstractController
+class ReservationController extends AbstractController
 {
     /**
      * @Route("/reservation", name="reservation")
@@ -26,12 +26,12 @@ class CultureController extends AbstractController
     /**
      * @Route("/ajouterR", name="ajouterR")
      */
-    public function addReservation(Request $request){
+    public function ajouterReservation(Request $request){
         $reservation = new Reservation();
         $form=$this->createForm(ReservationType::class, $reservation);
         $form->add('Ajouter',SubmitType::class);
         $form->handleRequest($request);
-    if ($form->isSubmitted()) {
+    if (($form->isSubmitted())&&($form->isValid()))  {
     $em= $this->getDoctrine()->getManager();
     $em->persist ($reservation);
     $em-> flush();
@@ -45,7 +45,7 @@ class CultureController extends AbstractController
     /**
     * @Route("/listReservations", name="listReservations")
     */
-    public function getReservation()
+    public function afficherReservation()
     {
     $repository =$this->getDoctrine()->getRepository(Reservation::class);
     $reservations =$repository-> findAll();
@@ -54,14 +54,14 @@ class CultureController extends AbstractController
     }
 
     /**
-     * @Route("/modifReservation/{ref}", name="modifReservation")
+     * @Route("/modifReservation/{num}", name="modifReservation")
      */
-    public function updateReservation($ref,Request $request){
-        $reservation = $this->getDoctrine()->getRepository(Reservation::class)->find($ref);
+    public function modifierReservation($num,Request $request){
+        $reservation = $this->getDoctrine()->getRepository(Reservation::class)->find($num);
         $form=$this->createForm(ReservationType::class, $reservation);
         $form->add('Modifier',SubmitType::class);
         $form->handleRequest($request);
-    if ($form->isSubmitted()) {
+    if (($form->isSubmitted())&&($form->isValid()))  {
     $em= $this->getDoctrine()->getManager();
     $em-> flush();
     return $this->redirectToRoute('listReservations');
@@ -73,11 +73,11 @@ class CultureController extends AbstractController
 
 
     /**
-    * @Route("/suppReservation/{ref}", name="suppReservation")
+    * @Route("/suppReservation/{num}", name="suppReservation")
     */
-    public function deleteReservation($ref,ReservationRepository $repository)
+    public function supprimerReservation($num,ReservationRepository $repository)
     {
-        $reservation = $this->getDoctrine()->getRepository(Reservation::class)->find($ref);
+        $reservation = $this->getDoctrine()->getRepository(Reservation::class)->find($num);
         $em = $this->getDoctrine()->getManager();
         $em->remove($reservation);
         $em->flush();

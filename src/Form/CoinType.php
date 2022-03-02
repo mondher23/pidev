@@ -14,6 +14,8 @@ class CoinType extends AbstractType
         $builder
             ->add('nb_places')
             ->add('pays')
+            ->add('img')
+            ->add('description_c')
         ;
     }
 
