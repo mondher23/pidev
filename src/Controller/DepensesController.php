@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 
 class DepensesController extends AbstractController
@@ -32,6 +34,42 @@ class DepensesController extends AbstractController
     {
         $depenses = $this->getDoctrine()->getRepository(Depense::class)->findAll();
         return $this->render('depenses/list.html.twig', ["depenses" => $depenses]);
+    }
+
+    /**
+     * @Route("/PDF", name="PDF")
+     */
+    public function pdf()
+    {
+
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        $depenses = $this->getDoctrine()->getRepository(Depense::class)->findAll();
+        
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('depenses/PDF.html.twig', [
+            'depenses' => $depenses
+        ]);
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+    
     }
 
      /**
@@ -139,4 +177,27 @@ class DepensesController extends AbstractController
         return $this->render("depenses/modifierfacture.html.twig", array('form' => $form->createView()));
     }
 
+     /**
+     * @Route("/stats", name="stats")
+     */
+    public function statistiques(DepenseRepository $depenseRep){
+        
+        $depenses = $depenseRep->findAll();
+
+        $date = [];
+        $montant = [];
+        
+
+        foreach($depenses as $depense){
+            $date[] = $depense->getDate()->format('d-m-Y');
+            $montant[] = $depense->getMontant();
+            
+        }
+
+
+        return $this->render('depenses/stats.html.twig', [
+            'date' => json_encode($date),
+            'montant' => json_encode($montant),
+        ]);
+    }
 }

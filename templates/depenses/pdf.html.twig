@@ -1,0 +1,22 @@
+<h1> La facture totale </h1>
+<table border="1">
+    <tr>
+        <td>id</td>
+        <td>type</td>
+        <td>date</td>
+        <td>montant</td>
+    </tr>
+    {% set total = 0  %}
+    {% for depense in depenses %}
+        <tr>
+            <td>{{ depense.id }}</td>
+            <td>{{ depense.type }}</td>
+            <td>{{ depense.montant }}</td>
+            <td>{{ depense.getDate()|date('d M Y') }}</td>
+             {% set total = total + depense.montant %}
+        
+            
+        </tr>
+    {% endfor %}
+<h3> montant total à payer {{total}}</h3>
+</table>
