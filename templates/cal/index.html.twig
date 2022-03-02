@@ -1,4 +1,5 @@
 {% extends 'admin.html.twig' %}
+
 {% block gestion %}
               <li class="nav-item menu-open">
             <a href="#" class="nav-link active" style="background-color: #E5BC4E;">
@@ -40,13 +41,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="listOffresb" class="nav-link active">
+                <a href="listOffresb" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Consulter les Offres</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="cal" class="nav-link">
+                <a href="cal" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Calendrier des Offres</p>
                 </a>
@@ -78,59 +79,73 @@
             </ul>
           </li>
 {% endblock %}
+{% block linksCal %}
+  <!-- Calendar -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css" 
+        integrity="sha256-5veQuRbWaECuYxwap/IOE/DAwNxgm4ikX7nrgsqYp88="
+        crossorigin="anonymous">
+
+
+  <style>
+    #calendrier{
+        width: 80%;
+        margin: auto;
+    }
+    </style>
+  
+{% endblock %}
+
 {% block titrePage %}
               <div class="col-sm-6">
-            <h1 class="m-0"> la Liste des Offres</h1>
+            <h1 class="m-0"> le Calendrier des Offres</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
               <li class="breadcrumb-item"> Gestion des Offres</li>
-              <li class="breadcrumb-item active"> Consulter les Offres</li>
+              <li class="breadcrumb-item active"> Calendrier des Offres</li>
             </ol>
           </div><!-- /.col -->
 {% endblock %}
+
+
+
+
+
+
+{% block jsCal %}
+    <!-- Calendar -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js" 
+        integrity="sha256-YicH/8aE660iEnJtgll3vT54dJApy3XkYmqNfGVFEzA=" 
+        crossorigin="anonymous">
+    </script>
+
+    <script>
+        window.onload = () => {
+        //document.addEventListener('DOMContentLoaded', function() {
+        let calendarElt = document.querySelector("#calendrier");
+        let calendar = new FullCalendar.Calendar(calendarElt, {
+          initialView: 'dayGridMonth',
+
+          locale: 'fr',
+            timeZone: 'Europe/Paris',
+            headerToolbar: {
+                start: 'prev,next today',
+                center: 'title',
+                end: 'dayGridMonth,timeGridWeek'
+            },
+
+            events: {{ data|raw }}  
+        })
+
+        calendar.render();
+      };
+        
+    </script>
+{% endblock %}
+
 {% block body %}
-    
-          <div class="card">
-              
-              <!-- /.card-header -->
-              <div class="card-body">
-              
-                <table class="table table-bordered table-striped">
-                  <thead class="table-dark" style="background-color: #4f5962;">
-                  <tr>
-                    <th>ID</th>
-                    <th>Titre</th>
-                    <th>Description</th>
-                    <th>Remise</th>
-                    <th>Image</th>
-                    <th>Date de début</th>
-                    <th>Date d'expiration</th>
-                    <th>Expiré</th>
-                    <th></th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {% for offre in offres %}
-                  <tr>
-                    <td>{{offre.getid()}}</td>
-                    <td>{{offre.titre}}</td>
-                    <td>{{offre.description}}</td>
-                    <td>{{offre.remise}}%</td>
-                    <td>{{offre.image}}</td>
-                    <td>{{offre.getDebDate()|date('d M Y')}}</td>
-                    <td>{{offre.getExpDate()|date('d M Y')}}</td>
-                    <td>{{offre.expire}}</td>
-                    <td><a href="{{path('updateO',{'id': offre.getid()})}}" type="button" class="btn btn-secondary">Update</a>
-                        <a href="{{path('deleteOffre',{'id': offre.getid()})}}" type="button" class="btn btn-danger">Delete</a>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                  </tbody>
-                </table>
-                <a href="{{ path('addO') }}" >Nouvelle Offre</a>
-              </div>
-              <!-- /.card-body -->
-            </div>
+    <div id="calendrier">
+
+    </div>
 {% endblock %}

@@ -5,7 +5,10 @@ namespace App\Form;
 use App\Entity\Offre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
@@ -24,8 +27,12 @@ class OffreType extends AbstractType
                 'mapped' => false,
                 'required' => false])
             ->add('remise')
+            ->add('deb_date', DateType::class) 
             ->add('exp_date', DateType::class) 
-            ->add('expire')   
+            ->add('background_color', ColorType::class)
+            ->add('border_color', ColorType::class)
+            ->add('text_color', ColorType::class)
+            ->add('expire') 
         ;
     }
 

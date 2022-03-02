@@ -33,6 +33,9 @@ class VoyageController extends AbstractController
         $formV->handleRequest($request);
     if ($formV->isSubmitted()&&$formV->isValid()) {
     $em= $this->getDoctrine()->getManager();
+
+    
+
     $voyage->setDone(0);
     $em->persist ($voyage);
     $em-> flush();

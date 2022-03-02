@@ -34,7 +34,7 @@ class OffreController extends AbstractController
     if ($formO->isSubmitted()&&$formO->isValid()) {
 
         $image = $formO->get('image')->getData();
-            $fichier = $offre->getid() . '.' . $image->guessExtension();
+            $fichier = $offre->getTitre() . '.' . $image->guessExtension();
 
             $image->move(
                 $this->getParameter('images_directory'),

@@ -46,6 +46,12 @@ class Offre
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank(message="Le champ *date du debut* est obligatoire")
+     */
+    private $deb_date;
+
+    /**
+     * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Le champ *date d'expiration* est obligatoire")
      * @Assert\GreaterThan("today")
      */
@@ -55,6 +61,21 @@ class Offre
      * @ORM\Column(type="boolean")
      */
     private $expire;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $background_color;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $border_color;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $text_color;
 
     /**
      * @ORM\OneToMany(targetEntity=Voyage::class, mappedBy="offre")
@@ -127,6 +148,18 @@ class Offre
         return $this;
     }
 
+    public function getDebDate(): ?\DateTimeInterface
+    {
+        return $this->deb_date;
+    }
+
+    public function setDebDate(\DateTimeInterface $deb_date): self
+    {
+        $this->deb_date = $deb_date;
+
+        return $this;
+    }
+
     public function getExpDate(): ?\DateTimeInterface
     {
         return $this->exp_date;
@@ -147,6 +180,42 @@ class Offre
     public function setExpire(bool $expire): self
     {
         $this->expire = $expire;
+
+        return $this;
+    }
+
+    public function getBackgroundColor(): ?string
+    {
+        return $this->background_color;
+    }
+
+    public function setBackgroundColor(string $background_color): self
+    {
+        $this->background_color = $background_color;
+
+        return $this;
+    }
+
+    public function getBorderColor(): ?string
+    {
+        return $this->border_color;
+    }
+
+    public function setBorderColor(string $border_color): self
+    {
+        $this->border_color = $border_color;
+
+        return $this;
+    }
+
+    public function getTextColor(): ?string
+    {
+        return $this->text_color;
+    }
+
+    public function setTextColor(string $text_color): self
+    {
+        $this->text_color = $text_color;
 
         return $this;
     }
