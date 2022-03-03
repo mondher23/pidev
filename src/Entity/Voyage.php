@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\VoyageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,38 +17,45 @@ class Voyage
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank(message="Le champ *ID User* est obligatoire")
+     * @Groups("post:read")
      */
     private $id_u;
 
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("post:read")
      */
     private $date_dep;
 
     /**
      * @ORM\Column(type="time")
+     * @Groups("post:read")
      */
     private $heure_dep;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le champ *destination* est obligatoire")
+     * @Groups("post:read")
      */
     private $destination;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups("post:read")
      */
     private $done;
 
     /**
+     * @Groups("post:read")
      * @ORM\ManyToOne(targetEntity=Offre::class, inversedBy="voyages")
      */
     private $offre;

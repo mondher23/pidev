@@ -1,0 +1,23 @@
+<h1> La liste des voyages </h1>
+<table border="1">
+    <tr>
+                    <th>ID</th>
+                    <th>ID user</th>
+                    <th>Offre</th>
+                    <th>Date de départ</th>
+                    <th>Heure de départ</th>
+                    <th>Destination</th>
+    </tr>
+    {% for voyage in voyages %}
+        <tr>
+                    <td>{{voyage.getid()}}</td>
+                    <td>{{voyage.getidU()}}</td>
+                    <td>{{voyage.offre.getTitre()}}</td>
+                    <td>{{voyage.getDateDep()|date('d M Y')}}</td>
+                    <td>{{voyage.getHeureDep()|date('h:i')}}</td>
+                    <td>{{voyage.destination}}</td> 
+        </tr>
+    {% endfor %}
+</table>
+
+    <h4> Le Tour Du Monde </h4>

@@ -14,6 +14,9 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Knp\Component\Pager\PaginatorInterface;
 
 class CultureController extends AbstractController
 {
@@ -70,10 +73,17 @@ class CultureController extends AbstractController
     /**
     * @Route("/listCulturesb", name="listCulturesb")
     */
-    public function getCulturesb()
+    public function getCulturesb(Request $request, PaginatorInterface $paginator)
     {
     $repository =$this->getDoctrine()->getRepository(Culture::class);
-    $cultures =$repository-> findAll();
+    $donnees =$repository-> findAll();
+
+    $cultures = $paginator->paginate(
+        $donnees,
+        $request->query->getInt('page',1),
+        2
+    );
+
     return $this-> render ('culture/getAllculturesb.html.twig', [
     'cultures' => $cultures]);
     }
@@ -118,6 +128,40 @@ class CultureController extends AbstractController
         return $this->redirectToRoute("listCulturesb");
     }
 
+     /**
+     * @Route("/showCulture/{ref}", name="showCulture")
+     */
+    public function showCulture($ref)
+    {
+
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        
+        $culture = $this->getDoctrine()->getRepository(Culture::class)->find($ref);
+        return $this->render('culture/show.html.twig', array("culture" => $culture));
+    
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('culture/show.html.twig', array("culture" => $culture));
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("mypdf.pdf", [
+            "Attachment" => true
+        ]);
+}
+
 //******************************JSON*********************************************************************
 
     /**
@@ -142,26 +186,26 @@ class CultureController extends AbstractController
     /**
     * @Route("/listCulturesJSON", name="listCulturesJSON")
     */
-    public function getCulturesJSON()
+    public function getCulturesJSON(NormalizerInterface $Normalizer)
     {   
-        $culture = $this->getDoctrine()
-        ->getManager()->getRepository(Culture::class)->findall();
-        $serializer = new Serializer([new ObjectNormalizer()]);
-        $formatted = $serializer->normalize($culture);
+        //$culture = $this->getDoctrine()
+        //->getManager()->getRepository(Culture::class)->findall();
+        //$serializer = new Serializer([new ObjectNormalizer()]);
+        //$formatted = $serializer->normalize($culture);
 
-        return new JsonResponse($formatted);
+        //return new JsonResponse($formatted);
 
 
 
-        //$repository =$this->getDoctrine()->getRepository(Culture::class);
-        //$cultures =$repository-> findAll();
+        $repository =$this->getDoctrine()->getRepository(Culture::class);
+        $cultures =$repository-> findAll();
 
-        //$jsonContent = $Normalizer->normalize($cultures, 'json',['groups'=>'post:read']);
+        $jsonContent = $Normalizer->normalize($cultures, 'json',['groups'=>'post:read']);
     
             //return $this-> render ('culture/getAllculturesJSON.html.twig', [
             //'data' => $jsonContent]);
     
-        //return new Response(json_encode($jsonContent));;
+        return new Response(json_encode($jsonContent));;
     }
 
     /**

@@ -129,7 +129,10 @@
                   {% endfor %}
                   </tbody>
                 </table>
-                <a href="{{ path('addO') }}" >Nouvelle Offre</a>
+                <a href="{{ path('addO') }}" type="button" class="btn btn-secondary">Nouvelle Offre</a>
+                
+                <a href="{{ path('cal') }}" type="button" class="btn btn-secondary" >Voir le Calendrier</a>
+                <ul class="pagination justify-content-center"> {{ knp_pagination_render(offres) }} </ul>
               </div>
               <!-- /.card-body -->
             </div>

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\MoreThanOrEqual;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=OffreRepository::class)
@@ -18,17 +19,20 @@ class Offre
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups("post:read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="le Titre est Obligatoire")
+     * @Groups("post:read")
      */
     private $titre;
 
     /**
      * @ORM\Column(type="string", length=2000)
+     * @Groups("post:read")
      */
     private $description;
 
@@ -36,44 +40,52 @@ class Offre
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Le champ *remise* est obligatoire")
      * @Assert\LessThanOrEqual(100,message="la remise doit etre inferieure ou egale a 100")
+     * @Groups("post:read")
      */
     private $remise;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("post:read")
      */
     private $image;
 
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Le champ *date du debut* est obligatoire")
+     * @Groups("post:read")
      */
     private $deb_date;
 
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank(message="Le champ *date d'expiration* est obligatoire")
-     * @Assert\GreaterThan("today")
+     * @Assert\GreaterThanOrEqual("today")
+     * @Groups("post:read")
      */
     private $exp_date;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups("post:read")
      */
     private $expire;
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups("post:read")
      */
     private $background_color;
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups("post:read")
      */
     private $border_color;
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups("post:read")
      */
     private $text_color;
 

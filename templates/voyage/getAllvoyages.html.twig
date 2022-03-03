@@ -127,7 +127,9 @@
                   {% endfor %}
                   </tbody>
                 </table>
-                <a href="{{ path('addV') }}" >Nouveau Voyage</a>
+                <a href="{{ path('addV') }}" type="button" class="btn btn-secondary" >Nouveau Voyage</a>
+                <a href="{{ path('pdfVoyages') }}" type="button" class="btn btn-danger">Télécharger PDF</a>
+                <ul class="pagination justify-content-center"> {{ knp_pagination_render(voyages) }} </ul>
               </div>
               <!-- /.card-body -->
             </div>

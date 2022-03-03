@@ -7,9 +7,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use App\Entity\Offre;
 use App\Form\OffreType;
 use App\Repository\OffreRepository;
+use Knp\Component\Pager\PaginatorInterface;
 
 class OffreController extends AbstractController
 {
@@ -66,10 +71,17 @@ class OffreController extends AbstractController
     /**
     * @Route("/listOffresb", name="listOffresb")
     */
-    public function getOffresb()
+    public function getOffresb(Request $request, PaginatorInterface $paginator)
     {
     $repository =$this->getDoctrine()->getRepository(Offre::class);
-    $offres =$repository-> findAll();
+    $donnees =$repository-> findAll();
+
+    $offres = $paginator->paginate(
+        $donnees,
+        $request->query->getInt('page',1),
+        2
+    );
+
     return $this-> render ('offre/getAlloffresb.html.twig', [
     'offres' => $offres]);
     }
@@ -114,5 +126,93 @@ class OffreController extends AbstractController
         $em->remove($offre);
         $em->flush();
         return $this->redirectToRoute("listOffresb");
+    }
+
+
+      //******************************JSON*********************************************************************
+
+    /**
+    * @Route("/addOffreJSON/new",name="addOffreJSON")
+    */
+
+    public function addOffreJSON(Request $request,NormalizerInterface $Normalizer)
+    {
+	    $em = $this->getDoctrine()->getManager();
+        $offre = new Offre();
+        //$offre->setId($request->get('id'));
+        $offre->setTitre($request->get('titre'));
+        $offre->setDescription($request->get('description'));
+        $offre->setRemise($request->get('remise'));
+        $offre->setImage($request->get('image'));
+        $offre->setDebDate(new \DateTime('now'));
+        $offre->setExpDate(new \DateTime('now'));
+        $offre->setExpire(0);
+        $offre->setBackgroundColor("#e5bc4e");
+        $offre->setBorderColor("#000000");
+        $offre->setTextColor("#000000");
+        
+        $em->persist($offre);
+        $em->flush();
+        $jsonContent = $Normalizer->normalize($offre, 'json',['groups'=>'post:read']);
+        return new Response(json_encode($jsonContent));;
+    }
+
+    /**
+    * @Route("/listOffresJSON", name="listOffresJSON")
+    */
+    public function getOffresJSON(NormalizerInterface $Normalizer )
+    {   
+        //$offre = $this->getDoctrine()
+        //->getManager()->getRepository(Offre::class)->findall();
+        //$serializer = new Serializer([new ObjectNormalizer()]);
+        //$formatted = $serializer->normalize($offre);
+
+        //return new JsonResponse($formatted);
+
+
+
+        $repository =$this->getDoctrine()->getRepository(Offre::class);
+        $offres =$repository->findAll();
+
+        $jsonContent = $Normalizer->normalize($offres, 'json',['groups'=>'post:read']);
+    
+            //return $this-> render ('Offre/getAllOffresJSON.html.twig', [
+            //'data' => $jsonContent]);
+    
+        return new Response(json_encode($jsonContent));;
+    }
+
+    /**
+    * @Route("/updateOffreJSON/{id}",name="updateOffreJSON")
+    */
+
+    public function updateOffreJSON(Request $request,NormalizerInterface $Normalizer,$id)
+    {
+	    $em = $this->getDoctrine()->getManager();
+        $offre = $em->getRepository(Offre::class)->find($id);
+        //$offre->setId($request->get('id'));
+        $offre->setTitre($request->get('titre'));
+        $offre->setDescription($request->get('description'));
+        $offre->setRemise($request->get('remise'));
+        $offre->setImage($request->get('image'));
+        $offre->setDebDate(new \DateTime('now'));
+        $offre->setExpDate(new \DateTime('now'));
+        $em->flush();
+        $jsonContent = $Normalizer->normalize($offre, 'json',['groups'=>'post:read']);
+        return new Response("updated successfully".json_encode($jsonContent));;
+    }
+
+    /**
+    * @Route("/deleteOffreJSON/{id}", name="deleteOffreJSON")
+    */
+    public function deleteOffreJSON(Request $request,NormalizerInterface $Normalizer,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $offre = $em->getRepository(Offre::class)->find($id);
+        $em->remove($offre);
+        $em->flush();
+    
+        $jsonContent = $Normalizer->normalize($offre, 'json',['groups'=>'post:read']);
+        return new Response("deleted successfully".json_encode($jsonContent));;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CultureRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,6 +16,7 @@ class Culture
     /**
      * @ORM\Id
      * @ORM\Column(type="string", length=255)
+     * @Groups("post:read")
      * @Assert\NotBlank(message="Le champ *référence* est obligatoire")
      * @Assert\Length(
      *      min = 2,
@@ -27,22 +29,26 @@ class Culture
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank(message="Le champ *pays* est obligatoire")
+     * @Groups("post:read")
      * @Assert\Regex("/^[A-Z]+/",message="le nom du pays doit commencer par une lettre en majuscule")
      */
     private $pays;
 
     /**
      * @ORM\Column(type="string", length=2000)
+     * @Groups("post:read")
      */
     private $texte;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("post:read")
      */
     private $date_ajout;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("post:read")
      */
     private $flag;
 

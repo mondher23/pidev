@@ -117,13 +117,15 @@
                     <td>{{culture.flag}}</td>
                     <td>
                         <a href="{{path('updateC',{'ref': culture.ref})}}" type="button" class="btn btn-secondary">Update</a>
+                        <a href="{{path('showCulture',{'ref': culture.ref})}}" type="button" class="btn btn-secondary">Imprimer PDF</a>
                         <a href="{{path('deleteCulture',{'ref': culture.ref})}}" type="button" class="btn btn-danger">Delete</a>
                     </td>
                   </tr>
                   {% endfor %}
                   </tbody>
                 </table>
-                <a href="{{ path('addC') }}" >Nouvelle Culture</a>
+                <a href="{{ path('addC') }}" type="button" class="btn btn-secondary" >Nouvelle Culture</a>
+                <ul class="pagination justify-content-center"> {{ knp_pagination_render(cultures) }} </ul>
               </div>
               <!-- /.card-body -->
             </div>
