@@ -115,4 +115,5 @@
     {% endfor %}
 </table>
 <a href="{{ path('ajouterfonction') }}">ajouter fonction</a>
+<ul class="pagination justify-content-center"> {{ knp_pagination_render(fonctions) }} </ul>
 {% endblock %}

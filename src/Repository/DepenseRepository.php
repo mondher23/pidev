@@ -47,4 +47,12 @@ class DepenseRepository extends ServiceEntityRepository
         ;
     }
     */
+      
+        public function depensedatemontant($dateOne,$dateTwo,$montant){
+         
+        $qb= $this->createQueryBuilder('d')
+        ->where('d.date BETWEEN :dateOne AND :dateTwo')
+        ->andwhere('d.montant= :montant')
+        ->setParameters(['dateOne'=>$dateOne,'dateTwo'=>$dateTwo,'montant'=>$montant]);
+        return $qb->getQuery()->getResult(); }
 }

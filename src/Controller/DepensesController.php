@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Entity\Depense;
 use App\Entity\Fonction;
 use App\Form\DepenseType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Repository\DepenseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+
 
 
 class DepensesController extends AbstractController
@@ -30,10 +35,35 @@ class DepensesController extends AbstractController
  /**
      * @Route("/listDepense", name="listDepense")
      */
-    public function listDepense()
+    public function listDepense(Request $request)
     {
+    
         $depenses = $this->getDoctrine()->getRepository(Depense::class)->findAll();
-        return $this->render('depenses/list.html.twig', ["depenses" => $depenses]);
+        
+        $formBuilder = $this->createFormBuilder();
+        $formBuilder->add('dateone', DateType::class, [
+            'widget' => 'choice',
+            'input'  => 'datetime_immutable'
+        ]);
+        $formBuilder->add('datetwo', DateType::class, [
+            'widget' => 'choice',
+            'input'  => 'datetime_immutable'
+        ]);
+        $formBuilder->add('montant',NumberType::class);
+        $formBuilder->add("trier", SubmitType::class);
+        $form = $formBuilder->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $dateOne =  $form['dateone']->getdata();
+            $dateTwo =  $form['datetwo']->getdata();
+            $montant =  $form['montant']->getdata();
+            $depensestri = $this->getDoctrine()->getRepository(Depense::class)->depensedatemontant($dateOne,$dateTwo,$montant);
+            return $this->render('depenses/list.html.twig',
+             ["depenses" => $depensestri,
+             "form" => $form->createView()]);
+        }
+        return $this->render('depenses/list.html.twig', ["depenses" => $depenses,
+        "form" => $form->createView()]);
     }
 
     /**
@@ -115,6 +145,7 @@ class DepensesController extends AbstractController
             $em->persist($depense);
             $em->flush();
             return $this->redirectToRoute('listDepense');
+            
         }
         return $this->render("depenses/ajouterfacture.html.twig", array('form' => $form->createView()));
     }

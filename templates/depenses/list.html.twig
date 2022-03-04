@@ -92,12 +92,14 @@
 {% endblock %}
 {% block body %}
 
-<table border="1">
+<table id="myTable" border="1">
+{{form(form)}}
     <tr>
         <td>id</td>
         <td>type</td>
-        <td>date</td>
         <td>montant</td>
+        <td>date</td>
+        
     </tr>
     {% for depense in depenses %}
         <tr>
@@ -112,6 +114,7 @@
             
         </tr>
     {% endfor %}
+    <a href="{{ path('PDF') }}">imprimer pdf</a>
 </table>
-<a href="{{ path('PDF') }}">ajouter imprimer pdf</a>
+ 
 {% endblock %}

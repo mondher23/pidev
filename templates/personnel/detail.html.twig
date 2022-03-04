@@ -1,4 +1,14 @@
 {% extends 'admin.html.twig' %}
+{% block links %}
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <!-- IonIcons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  {% endblock %}
 {% block gestion %}
               <li class="nav-item menu-open">
             <a href="#" class="nav-link active" style="background-color: #E5BC4E;">
@@ -10,13 +20,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="ajouterpersonnel" class="nav-link ">
+                <a href="../ajouterpersonnel" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Ajouter un Personnel</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="listPersonnel" class="nav-link active">
+                <a href="../listPersonnel" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Consulter les Personnels</p>
                 </a>
@@ -40,7 +50,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="listFonction" class="nav-link">
+                <a href="../listFonction" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Consulter les Fonction</p>
                 </a>
@@ -58,19 +68,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="ajoutersalaire" class="nav-link">
+                <a href="../ajoutersalaire" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Ajouter un salaire</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="ajouterfacture" class="nav-link">
+                <a href="../ajouterfacture" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Ajouter une facture</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="listDepense" class="nav-link">
+                <a href="../listDepense" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Consulter les Depenses</p>
                 </a>
@@ -92,27 +102,16 @@
 {% endblock %}
 
 {% block body %}
-<div class="sidebar-search">
-      <div class="input-group custom-search-form">
-          <input type="text" id="search" class="form-control" placeholder="Search item">
-      </div>
-      <!-- /input-group -->
-  </div>
-  <ul class="nav" id="side-menu">
-      <li>
-          <ul class="nav nav-second-level" id="entitiesNav">
-          </ul>
-      </li>
-  </ul>
+
 
     
-{% for personnel in personnels %}
+
             <!-- Profile Image -->
             <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
                   <img class="profile-user-img img-fluid img-circle"
-                       src="uploads/{{personnel.photo}}"
+                       src="../uploads/{{personnel.photo}}"
                        alt="User profile picture">
                 </div>
 
@@ -136,53 +135,23 @@
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-            {% endfor %}
-            <ul class="pagination justify-content-center"> {{ knp_pagination_render(personnels) }} </ul>
-            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
-<script type="text/javascript">
-    jQuery(document).ready(function() {
-        var searchRequest = null;
-        $("#search").keyup(function() {
-            var minlength = 1;
-            var that = this;
-            var value = $(this).val();
-            var entitySelector = $("#entitiesNav").html('');
-            if (value.length >= minlength ) {
-                if (searchRequest != null)
-                    searchRequest.abort();
-                searchRequest = $.ajax({
-                    type: "GET",
-                    url: "{{ path('ajax_search') }}",
-                    data: {
-                        'q' : value
-                    },
-                    dataType: "text",
-                    success: function(msg){
-                        //we need to check if the value is the same
-                        
-                        if (value==$(that).val()) {
-                            var result = JSON.parse(msg);
-                            $.each(result, function(key, arr) {
-                                $.each(arr, function(id, value) {
-                                    if (key == 'personnels') {
-                                        if (id != 'error') {
-                                             
-                                            console.log(id , value)
-                                           entitySelector.append('<li><b>'+value[0]+' '+value[1]+'</b><a href="/detailPersonnel/'+id+'">'+'<img src="/uploads/'+value[2]+'" style="width: 50px; height: 50px"/>'+'</a></li>');
-                                                    
-                                                    
-                                        } else {
-                                            entitySelector.append('<li class="errorLi">'+value+'</li>');
-                                        }
-                                    }
-                                });
-                            });
-                        }
-                     }
-                });
-            }
-        });
-    });
-</script>
+            
+            
 
+{% endblock %}
+
+{% block js %}
+<!-- jQuery -->
+<script src="../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE -->
+<script src="../dist/js/adminlte.js"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="../plugins/chart.js/Chart.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="../dist/js/pages/dashboard3.js"></script>
 {% endblock %}

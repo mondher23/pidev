@@ -1,16 +1,18 @@
 <?php
 
 namespace App\Controller;
-use App\Entity\Personnel;
 use App\Entity\Fonction;
+use App\Entity\Personnel;
 use App\Form\PersonnelType;
 use App\Repository\PersonnelRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class PersonnelController extends AbstractController
 {
@@ -29,12 +31,25 @@ class PersonnelController extends AbstractController
     /**
      * @Route("/listPersonnel", name="listPersonnel")
      */
-    public function listPersonnel()
+    public function listPersonnel(Request $request, PaginatorInterface $paginator)
     {
-        $personnels = $this->getDoctrine()->getRepository(Personnel::class)->findAll();
+        $donnees = $this->getDoctrine()->getRepository(Personnel::class)->findAll();
+        $personnels = $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page',1),
+            2
+        );
         return $this->render('personnel/list.html.twig', ["personnels" => $personnels]);
     }
+    /**
+     * @Route("/detailPersonnel/{id}", name="detailPersonnel")
+     */
+    public function DetailPersonnel($id)
+    {
+        $personnel = $this->getDoctrine()->getRepository(Personnel::class)->find($id);
 
+        return $this->render('personnel/detail.html.twig', ["personnel" => $personnel]);
+    }
      
     /**
      * @Route("/listchef", name="listchef")
@@ -112,5 +127,33 @@ class PersonnelController extends AbstractController
         }
         return $this->render("personnel/modifier.html.twig", array('form' => $form->createView()));
     }
+   /**
+   * Creates a new ActionItem entity.
+   *
+   * @Route("/search", name="ajax_search")
+   * @Method("GET")
+   */
+  public function searchAction(Request $request)
+  {
+      $em = $this->getDoctrine()->getManager();
+      $requestString = $request->get('q');
+      $personnel = $em->getRepository(Personnel::class)->findEntitiesByString($requestString);
+      if (!$personnel) {
+          $result['personnels']['error'] = "product introuvable 🙁 ";
+      } else {
+          $result['personnels'] = $this->getRealEntities($personnel);
+      }
+      return new Response(json_encode($result));
+  }
+  
+
+public function getRealEntities($personnel){
+
+    foreach ($personnel as $personnel){
+        $realEntities[$personnel->getId()] = [$personnel->getNom() ,$personnel->getPrenom(),$personnel->getPhoto()];
+    }
+
+    return $realEntities;
+}
 
 }

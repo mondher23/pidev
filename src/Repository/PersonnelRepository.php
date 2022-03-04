@@ -57,4 +57,10 @@ class PersonnelRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findEntitiesByString($str)
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT p FROM App:Personnel p WHERE p.nom LIKE :str or p.prenom LIKE :str ' )
+            ->setParameter('str', '%'.$str.'%')->getResult();
+    }
 }

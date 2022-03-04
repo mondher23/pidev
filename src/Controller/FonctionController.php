@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class FonctionController extends AbstractController
@@ -33,9 +34,13 @@ class FonctionController extends AbstractController
     /**
      * @Route("/listFonction", name="listFonction")
      */
-    public function listFonction()
+    public function listFonction(Request $request, PaginatorInterface $paginator)
     {
-        $fonctions = $this->getDoctrine()->getRepository(Fonction::class)->findAll();
+        $donnees = $this->getDoctrine()->getRepository(Fonction::class)->findAll();
+        $fonctions = $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page',1),
+            2);
         return $this->render('fonction/list.html.twig', ["fonctions" => $fonctions]);
     }
 
