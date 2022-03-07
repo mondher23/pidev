@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 
 class PlatType extends AbstractType
@@ -18,7 +19,11 @@ class PlatType extends AbstractType
             
             ->add('nom_p')
             ->add('prix')
-            ->add('img_p')
+            ->add('img_p', FileType::class, [
+                'label' => false,
+                'multiple' => false,
+                'mapped' => false,
+                'required' => false])
             ->add('description')
             ->add('dispo')
             ->add('coin',EntityType::class,[

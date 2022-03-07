@@ -10,6 +10,11 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
+use App\Services\QrcodeServices;
+use Knp\Component\Pager\PaginatorInterface;
+
+
+
 
 class ReservationController extends AbstractController
 {
@@ -27,6 +32,7 @@ class ReservationController extends AbstractController
      * @Route("/ajouterR", name="ajouterR")
      */
     public function ajouterReservation(Request $request){
+        
         $reservation = new Reservation();
         $form=$this->createForm(ReservationType::class, $reservation);
         $form->add('Ajouter',SubmitType::class);
@@ -40,15 +46,38 @@ class ReservationController extends AbstractController
     return $this->render('reservation/ajouter.html.twig', [
     'form' => $form->Createview(),
     ]);
+    
+    }
+  /**
+     * @Route("/ajouterRf", name="ajouterRf")
+     */
+    public function ajouterfReservation(Request $request){
+        
+        $reservation = new Reservation();
+        $form=$this->createForm(ReservationType::class, $reservation);
+        $form->add('Ajouter',SubmitType::class);
+        $form->handleRequest($request);
+    if (($form->isSubmitted())&&($form->isValid()))  {
+        
+    $em= $this->getDoctrine()->getManager();
+    $em->persist ($reservation);
+    $em-> flush();
+    return $this->redirectToRoute('ajouterRf');
+    }
+    return $this->render('reservation/ajouterf.html.twig', [
+    'form' => $form->Createview(),
+    ]);
     }
 
     /**
     * @Route("/listReservations", name="listReservations")
     */
-    public function afficherReservation()
+    public function afficherReservation(Request $request,PaginatorInterface $paginator)
     {
-    $repository =$this->getDoctrine()->getRepository(Reservation::class);
-    $reservations =$repository-> findAll();
+        $donnees = $this->getDoctrine()->getRepository(Reservation::class)->findAll();
+        $reservations = $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page',1),2);
     return $this-> render ('reservation/afficher.html.twig', [
     'reservations' => $reservations]);
     }
@@ -83,10 +112,31 @@ class ReservationController extends AbstractController
         $em->flush();
         return $this->redirectToRoute("listReservations");
     }
+   
+    /**
+     * @Route("/stat", name="stat")
+     */
+    public function statistiques(ReservationRepository  $repository)
+    {
+        
+        $reservations = $repository->findAll();
+
+        $date = [];
+        $nbre = [];
+        
+
+        foreach($reservations  as $reservation ){
+            $date[] =  $reservation->getDate()->format('d-m-Y');
+            $nbre[] =  $reservation->getNbPersonnes();
+            
+        }
+        return $this->render('reservation/stats.html.twig', [
+            'date' => json_encode($date),
+            'nb_personnes' => json_encode($nbre),
+        ]);
 
 
 
 
 
-
-}
+}}

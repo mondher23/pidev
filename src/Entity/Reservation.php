@@ -15,24 +15,8 @@ class Reservation
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Le champ *numero* est obligatoire")
-     * @Assert\Length(
-     *      min = 1,
-     *      max = 6,
-     *      minMessage = "le numero de la reservation doit contenir au mois 1 caractère",
-     *      maxMessage = "le numero de la reservation doit contenir au plus 6 caractères")
      */
     private $num;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $id_u;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $id_c;
 
     /**
      * @ORM\Column(type="date")
@@ -50,6 +34,11 @@ class Reservation
      * @Assert\LessThanOrEqual(20,message="le nombre de personnes doit etre au plus 20 ")
      */
     private $nb_personnes;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Coin::class, inversedBy="reservations")
+     */
+    private $coin;
 
     public function getId(): ?int
     {
@@ -124,6 +113,18 @@ class Reservation
     public function setNbPersonnes(int $nb_personnes): self
     {
         $this->nb_personnes = $nb_personnes;
+
+        return $this;
+    }
+
+    public function getCoin(): ?Coin
+    {
+        return $this->coin;
+    }
+
+    public function setCoin(?Coin $coin): self
+    {
+        $this->coin = $coin;
 
         return $this;
     }

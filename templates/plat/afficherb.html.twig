@@ -96,6 +96,7 @@
                     <th>Description</th>
                     <th>Disponibilité</th>
                     <th>Pays</th>
+                    
                   </tr>
                   </thead>
                   <tbody>
@@ -108,13 +109,16 @@
                     <td>{{plats.description}}</td>
                     <td>{{plats.dispo}}</td>
                     <td>{{plats.coin.getPays()}}</td>
+                    
                     <td><a href="{{path('modifPlat',{'id': plats.id})}}" type="button" class="btn btn-secondary">Modifier</a>
                         <a href="{{path('suppPlat',{'id': plats.id})}}" type="button" class="btn btn-secondary">Supprimer</a>
                     </td>
                   </tr>
                   {% endfor %}
+                  
                   </tbody>
                 </table>
+                <ul class="pagination justify-content-center"> {{ knp_pagination_render(plat) }} </ul>
               </div>
               <!-- /.card-body -->
             </div>

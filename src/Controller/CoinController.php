@@ -14,6 +14,10 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use App\Form\SearchType;
+use Knp\Component\Pager\PaginatorInterface;
+
+
 
 class CoinController extends AbstractController
 {
@@ -35,6 +39,14 @@ class CoinController extends AbstractController
         $form->add('Ajouter',SubmitType::class);
         $form->handleRequest($request);
     if (($form->isSubmitted())&&($form->isValid())) {
+     $img = $form->get('img')->getData();
+            $fichier = $coin->getPays() . '.' . $img->guessExtension();
+
+            $img->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+           $coin->setImg($fichier);
     $em= $this->getDoctrine()->getManager();
     $em->persist ($coin);
     $em-> flush();
@@ -72,10 +84,12 @@ class CoinController extends AbstractController
     /**
     * @Route("/listCoinsb", name="listCoinsb")
     */
-    public function afficherbCoins()
+    public function afficherbCoins(Request $request,PaginatorInterface $paginator)
     {
-    $repository =$this->getDoctrine()->getRepository(Coin::class);
-    $coin =$repository-> findAll();
+        $donnees = $this->getDoctrine()->getRepository(Coin::class)->findAll();
+        $coin = $paginator->paginate(
+            $donnees,
+            $request->query->getInt('page',1),2);
     return $this-> render ('coin/afficherb.html.twig', [
     'coin' => $coin]);
     }
@@ -110,6 +124,14 @@ class CoinController extends AbstractController
         $form->add('Modifier',SubmitType::class);
         $form->handleRequest($request);
         if(($form->isSubmitted())&&($form->isValid()))  {
+            $img = $form->get('img')->getData();
+            $fichier = $coin->getPays() . 'modifié.' . $img->guessExtension();
+
+            $img->move(
+                $this->getParameter('images_directory'),
+                $fichier
+            );
+           $coin->setImg($fichier);
     $em= $this->getDoctrine()->getManager();
     $em-> flush();
     return $this->redirectToRoute('listCoinsb');

@@ -6,6 +6,7 @@ use App\Entity\Plat;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @method Plat|null find($id, $lockMode = null, $lockVersion = null)
  * @method Plat|null findOneBy(array $criteria, array $orderBy = null)
@@ -18,6 +19,8 @@ class PlatRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Plat::class);
     }
+
+  
 
     // /**
     //  * @return Plat[] Returns an array of Plat objects
@@ -47,4 +50,15 @@ class PlatRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findEntities($str)
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT p
+            FROM App:Plat p
+        WHERE p.nom_p LIKE :str or p.description LIKE :str'
+
+            )->setParameter('str', '%'.$str.'%')->getResult();
+    }
+   
+    
 }

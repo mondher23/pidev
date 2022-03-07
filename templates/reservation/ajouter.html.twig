@@ -86,17 +86,24 @@
 {% endblock %}
 
 {% block body %}
-{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+<div class="card-body">
+        {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+          {{ form_errors(form.date) }}
+          {{ form_errors(form.nb_personnes) }}
+       
+        <div class="form-group">
+          {{ form_label(form.date,"Date") }}
+          {{ form_widget(form.date)}}
+        </div>
+        <div class="form-group">
+          {{ form_label(form.nb_personnes,"nbre de personnes") }}
+          {{ form_widget(form.nb_personnes)}}
+        </div>
+        
+        {{form_rest(form)}}
+        {{ form_end(form) }}
+                <a href="{{ path('listReservations') }}" >Retour à la Liste</a>
+</div>
 
-{{ form_errors(form.num) }}
-{{ form_label(form.num,"numero") }}
-{{ form_widget(form.num)}}
-{{ form_errors(form.date) }}
-{{ form_label(form.date,"date") }}
-{{ form_widget(form.date)}}
-{{ form_errors(form.nb_personnes) }}
-{{ form_label(form.nb_personnes,"nb de personnes") }}
-{{ form_widget(form.nb_personnes)}}
-{{form_rest(form)}}
-{{ form_end(form) }}
+        
 {% endblock %}

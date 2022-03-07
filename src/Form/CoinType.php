@@ -6,6 +6,7 @@ use App\Entity\Coin;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class CoinType extends AbstractType
 {
@@ -14,7 +15,11 @@ class CoinType extends AbstractType
         $builder
             ->add('nb_places')
             ->add('pays')
-            ->add('img')
+            ->add('img', FileType::class, [
+                'label' => false,
+                'multiple' => false,
+                'mapped' => false,
+                'required' => false])
             ->add('description_c')
         ;
     }

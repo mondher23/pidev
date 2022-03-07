@@ -59,6 +59,8 @@ class Plat
      */
     private $coin;
 
+
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -134,6 +136,18 @@ class Plat
     public function setCoin(?Coin $coin): self
     {
         $this->coin = $coin;
+
+        return $this;
+    }
+
+    public function getNote(): ?int
+    {
+        return $this->note;
+    }
+
+    public function setNote(int $note): self
+    {
+        $this->note = $note;
 
         return $this;
     }

@@ -92,6 +92,7 @@
                     <th>Date</th>
                     <th>Heure</th>
                     <th>Nombre de personnes</th>
+                    <th>Coin</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -101,13 +102,19 @@
                     <td>{{reservation.date|date('d M Y')}}</td>
                     <td>{{reservation.heure|date('h:i')}}</td>
                     <td>{{reservation.getNbPersonnes()}}</td>
+                     <td>{{reservation.coin.getPays()}}</td>
                     <td><a href="{{path('modifReservation',{'num': reservation.num})}}" type="button" class="btn btn-secondary">Modifier</a>
                         <a href="{{path('suppReservation',{'num': reservation.num})}}" type="button" class="btn btn-secondary">Supprimer</a>
                     </td>
+                    
+
                   </tr>
                   {% endfor %}
+                  
+
                   </tbody>
                 </table>
+                 <ul class="pagination justify-content-center"> {{ knp_pagination_render(reservations) }} </ul>
               </div>
               <!-- /.card-body -->
             </div>
