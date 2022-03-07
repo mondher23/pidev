@@ -1,5 +1,5 @@
-<h1> La facture totale </h1>
-<table border="1">
+<h1 align="center"> La facture totale </h1>
+<table align="center" border="1">
     <tr>
         <td>id</td>
         <td>type</td>
@@ -18,5 +18,9 @@
             
         </tr>
     {% endfor %}
-<h3> montant total à payer {{total}}</h3>
+
 </table>
+<h4 align="right"> La somme totale est : {{total}} DT </h4>
+<h4 align="right"> TVA = 15% </h4>
+{% set total = total * 1.15 %}
+<h3 align="right"> Montant à payer :  {{total}} DT</h3>1
