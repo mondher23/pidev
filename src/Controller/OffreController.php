@@ -12,6 +12,8 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use App\Entity\Offre;
+//use App\Entity\User;
+//use App\Repository\UserRepository;
 use App\Form\OffreType;
 use App\Repository\OffreRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -50,6 +52,18 @@ class OffreController extends AbstractController
     $offre->setExpire(0);
     $em->persist ($offre);
     $em-> flush();
+
+    //$users=$this->getDoctrine()->getRepository(User::class)->findAll();
+    // foreach ($users as $user){
+    //    $message = (new \Swift_Message(''))
+    //        ->setFrom('letourdumonde9@gmail.com')
+    //        ->setContentType("text/html")
+    //        ->setTo($user->getEmail())
+    //        ->setBody("<p style='color: black;'> Nouvelle offre. Veuillez acceder à notre site </p>");
+    //    $mailer->send($message) ;
+    // }
+
+
     return $this->redirectToRoute('listOffresb');
     }
     return $this->render('offre/add.html.twig', [
@@ -66,7 +80,7 @@ class OffreController extends AbstractController
     $offres =$repository-> listOffresDispo();
     return $this-> render ('offre/getAlloffres.html.twig', [
     'offres' => $offres]);
-    }
+    }   
 
     /**
     * @Route("/listOffresb", name="listOffresb")
@@ -81,9 +95,43 @@ class OffreController extends AbstractController
         $request->query->getInt('page',1),
         2
     );
+        return $this-> render ('offre/getAlloffresb.html.twig', [
+        'offres' => $offres]);
+    }
 
-    return $this-> render ('offre/getAlloffresb.html.twig', [
-    'offres' => $offres]);
+    /**
+    * @Route("/listOffresbASC", name="listOffresbASC")
+    */
+    public function getOffresbASC(Request $request, PaginatorInterface $paginator)
+    {
+    $repository =$this->getDoctrine()->getRepository(Offre::class);
+    $donnees =$repository-> triRemiseASC();
+
+    $offres = $paginator->paginate(
+        $donnees,
+        $request->query->getInt('page',1),
+        2
+    );
+        return $this-> render ('offre/getAlloffresbASC.html.twig', [
+        'offres' => $offres]);
+    }
+
+        /**
+    * @Route("/listOffresbDESC", name="listOffresbDESC")
+    */
+    public function getOffresbDESC(Request $request, PaginatorInterface $paginator)
+    {
+    $repository =$this->getDoctrine()->getRepository(Offre::class);
+    $donnees =$repository-> triRemiseDESC();
+
+    $offres = $paginator->paginate(
+        $donnees,
+        $request->query->getInt('page',1),
+        2
+    );
+        return $this-> render ('offre/getAlloffresbDESC.html.twig', [
+        'offres' => $offres]);
+        
     }
 
     /**

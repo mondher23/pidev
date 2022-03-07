@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+//use App\Entity\User;
+//use App\Repository\UserRepository;
 use App\Entity\Voyage;
 use App\Form\VoyageType;
 use App\Repository\VoyageRepository;
@@ -14,6 +16,9 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Knp\Component\Pager\PaginatorInterface;
@@ -40,16 +45,19 @@ class VoyageController extends AbstractController
         $formV->handleRequest($request);
     if ($formV->isSubmitted()&&$formV->isValid()) {
     $em= $this->getDoctrine()->getManager();
-    $voyage->setDone(0);
+    //$voyage->setDone(0);
+    //$utilisateur =  $formV->get('user')->getdata();
     $em->persist ($voyage);
     $em-> flush();
 
+    //$user=$this->getDoctrine()->getRepository(User::class)->find($utilisateur->getId());
     $message = (new \Swift_Message('Le Tour Du Monde!'))
                    ->setFrom('letourdumonde9@gmail.com')
                    ->setContentType("text/html")
                    ->setTo('zizou.doudi@gmail.com')
+                   //->setTo('$user->getMail()')
                    ->setBody(
-                    "<p style='color: black;'> Vous avez gagner un voyage  </p>"
+                    "<p style='color: black;'> Vous avez gagner un voyage, venez chez nous pour plus d'infos  </p>"
                    )
                ;
     

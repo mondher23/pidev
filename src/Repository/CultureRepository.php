@@ -19,6 +19,11 @@ class CultureRepository extends ServiceEntityRepository
         parent::__construct($registry, Culture::class);
     }
 
+    public function triCultureTitre(){
+        return $this->findBy(array(), array('pays' => 'ASC'));
+    
+    }
+
     // /**
     //  * @return Culture[] Returns an array of Culture objects
     //  */
@@ -47,4 +52,14 @@ class CultureRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findEntitiesByString($str)
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT c
+            FROM App:Culture c
+        WHERE c.pays LIKE :str or c.texte LIKE :str'
+
+            )->setParameter('str', '%'.$str.'%')->getResult();
+    }
 }

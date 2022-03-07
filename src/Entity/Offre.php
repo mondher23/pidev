@@ -39,7 +39,8 @@ class Offre
     /**
      * @ORM\Column(type="float")
      * @Assert\NotBlank(message="Le champ *remise* est obligatoire")
-     * @Assert\LessThanOrEqual(100,message="la remise doit etre inferieure ou egale a 100")
+     * @Assert\LessThanOrEqual(100,message="la remise doit etre entre 5 et 100")
+     * @Assert\GreaterThanOrEqual(5,message="la remise doit etre entre 5 et 100")
      * @Groups("post:read")
      */
     private $remise;

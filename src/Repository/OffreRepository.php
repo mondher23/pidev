@@ -27,6 +27,14 @@ class OffreRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function triRemiseASC(){
+        return $this->findBy(array(), array('remise' => 'ASC'));
+    
+    }
+    public function triRemiseDESC(){
+        return $this->findBy(array(), array('remise' => 'DESC'));
+    
+    }
 
 
     // /**

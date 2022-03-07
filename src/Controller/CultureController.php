@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Culture;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Form\CultureType;
 use App\Repository\CultureRepository;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -65,7 +66,7 @@ class CultureController extends AbstractController
     public function getCultures()
     {
     $repository =$this->getDoctrine()->getRepository(Culture::class);
-    $cultures =$repository-> findAll();
+    $cultures =$repository-> triCultureTitre();
     return $this-> render ('culture/getAllcultures.html.twig', [
     'cultures' => $cultures]);
     }
@@ -133,34 +134,38 @@ class CultureController extends AbstractController
      */
     public function showCulture($ref)
     {
-
-        // Configure Dompdf according to your needs
-        $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Arial');
-        
-        // Instantiate Dompdf with our options
-        $dompdf = new Dompdf($pdfOptions);
-        
         $culture = $this->getDoctrine()->getRepository(Culture::class)->find($ref);
         return $this->render('culture/show.html.twig', array("culture" => $culture));
+    }
+
     
-        // Retrieve the HTML generated in our twig file
-        $html = $this->renderView('culture/show.html.twig', array("culture" => $culture));
-        
-        // Load HTML to Dompdf
-        $dompdf->loadHtml($html);
-        
-        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-        $dompdf->setPaper('A4', 'portrait');
+    /**
+   * Creates a new ActionItem entity.
+   *
+   * @Route("/search", name="ajax_search")
+   * @Method("GET")
+   */
+  public function searchAction(Request $request)
+  {
+      $em = $this->getDoctrine()->getManager();
+      $requestString = $request->get('q');
+      $culture = $em->getRepository(Culture::class)->findEntitiesByString($requestString);
+      if (!$culture) {
+          $result['cultures']['error'] = "culture introuvable 🙁 ";
+      } else {
+          $result['cultures'] = $this->getRealEntities($culture);
+      }
+      return new Response(json_encode($result));
+  }
+  
 
-        // Render the HTML as PDF
-        $dompdf->render();
+public function getRealEntities($culture){
 
-        // Output the generated PDF to Browser (force download)
-        $dompdf->stream("mypdf.pdf", [
-            "Attachment" => true
-        ]);
-}
+    foreach ($culture as $culture){
+        $realEntities[$culture->getRef()] = [$culture->getPays() ,$culture->getFlag()];
+    }
+    return $realEntities;
+        }
 
 //******************************JSON*********************************************************************
 

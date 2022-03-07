@@ -40,7 +40,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="listOffresb" class="nav-link">
+                <a href="listOffresb" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Consulter les Offres</p>
                 </a>
@@ -64,7 +64,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="addV" class="nav-link active">
+                <a href="addV" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Ajouter un Voyage</p>
                 </a>
@@ -80,35 +80,60 @@
 {% endblock %}
 {% block titrePage %}
               <div class="col-sm-6">
-            <h1 class="m-0"> Ajouter un Voyage</h1>
+            <h1 class="m-0"> la Liste des Offres</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item"> Gestion des Voyages</li>
-              <li class="breadcrumb-item active"> Ajouter un Voyage</li>
+              <li class="breadcrumb-item"> Gestion des Offres</li>
+              <li class="breadcrumb-item active"> Consulter les Offres</li>
             </ol>
           </div><!-- /.col -->
 {% endblock %}
 {% block body %}
-
-    <div class="card-body">
-        {{ form_start(formV,{'attr': {'novalidate': 'novalidate'}} ) }}
-          {{ form_errors(formV.id_u) }}
-          {{ form_errors(formV.destination) }}
-        <div class="form-group">
-          {{ form_label(formV.id_u,"User") }}
-          {{ form_widget(formV.id_u)}}
-        </div>
-        <div class="form-group">
-          {{ form_label(formV.destination,"Destination") }}
-          {{ form_widget(formV.destination)}}
-        </div>
-        
-        {{form_rest(formV)}}
-        {{ form_end(formV) }}
-        <a href="{{ path('listVoyages') }}" type="button" class="btn btn-secondary">Retour à la Liste</a>
-    </div>
-
-
+    
+          <div class="card">
+              
+              <!-- /.card-header -->
+              <div class="card-body">
+              
+                <table class="table table-bordered table-striped">
+                  <thead class="table-dark" style="background-color: #4f5962;">
+                  <tr>
+                    <th>ID</th>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Remise <a href="listOffresbDESC">↕</a></th>
+                    <th>Image </th>
+                    <th>Date de début</th>
+                    <th>Date d'expiration</th>
+                    <th>Expiré</th>
+                    <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for offre in offres %}
+                  <tr>
+                    <td>{{offre.getid()}}</td>
+                    <td>{{offre.titre}}</td>
+                    <td>{{offre.description}}</td>
+                    <td>{{offre.remise}}%</td>
+                    <td>{{offre.image}}</td>
+                    <td>{{offre.getDebDate()|date('d M Y')}}</td>
+                    <td>{{offre.getExpDate()|date('d M Y')}}</td>
+                    <td>{{offre.expire}}</td>
+                    <td><a href="{{path('updateO',{'id': offre.getid()})}}" type="button" class="btn btn-secondary">Update</a>
+                        <a href="{{path('deleteOffre',{'id': offre.getid()})}}" type="button" class="btn btn-danger">Delete</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+                <a href="{{ path('addO') }}" type="button" class="btn btn-secondary">Nouvelle Offre</a>
+                
+                <a href="{{ path('cal') }}" type="button" class="btn btn-secondary" >Voir le Calendrier</a>
+                <ul class="pagination justify-content-center"> {{ knp_pagination_render(offres) }} </ul>
+              </div>
+              <!-- /.card-body -->
+            </div>
 {% endblock %}

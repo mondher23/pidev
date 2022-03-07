@@ -101,7 +101,7 @@
                   <thead class="table-dark" style="background-color: #4f5962;">
                   <tr>
                     <th>ID</th>
-                    <th>ID user</th>
+                    <th>User CIN</th>
                     <th>Offre</th>
                     <th>Date de départ</th>
                     <th>Heure de départ</th>
@@ -117,7 +117,7 @@
                     <td>{{voyage.getidU()}}</td>
                     <td>{{voyage.offre.getTitre()}}</td>
                     <td>{{voyage.getDateDep()|date('d M Y')}}</td>
-                    <td>{{voyage.getHeureDep()|date('h:i')}}</td>
+                    <td>{{voyage.getHeureDep()|date('H:i')}}</td>
                     <td>{{voyage.destination}}</td>
                     <td>{{voyage.done}}</td>
                     <td><a href="{{path('updateV',{'id': voyage.getid()})}}" type="button" class="btn btn-secondary">Update</a>

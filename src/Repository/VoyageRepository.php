@@ -19,6 +19,14 @@ class VoyageRepository extends ServiceEntityRepository
         parent::__construct($registry, Voyage::class);
     }
 
+    public function rechercheDateDestination($datedeb,$datefin,$destination){
+         
+        $qb= $this->createQueryBuilder('d')
+        ->where('d.date_dep BETWEEN :datedeb AND :datefin')
+        ->andwhere('d.destination= :destination')
+        ->setParameters(['datedeb'=>$datedeb,'datefin'=>$datefin,'destination'=>$destination]);
+        return $qb->getQuery()->getResult(); }
+
     // /**
     //  * @return Voyage[] Returns an array of Voyage objects
     //  */

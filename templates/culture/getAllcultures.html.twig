@@ -127,8 +127,81 @@
         <div class="section-title">
           <h2>Cultures</h2>
           <p>Get New informations For Your Next Trip</p>
+          <div class="sidebar-search">
+        <div class="input-group custom-search-form">
+          <input type="text" id="search" class="form-control" placeholder="Rechercher une Culture">
         </div>
+      <!-- /input-group -->
+      </div>
+      <ul class="nav" id="side-menu">
+          <li>
+              <ul class="nav nav-second-level" id="entitiesNav">
+              </ul>
+          </li>
+      </ul>
 
+
+
+      <!-- jQuery is necessary -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> 
+    <script type="text/javascript">
+          jQuery(document).ready(function() 
+        {
+            var searchRequest = null;
+            $("#search").keyup(function() 
+          {
+            var minlength = 1;
+            var that = this;
+            var value = $(this).val();
+            var entitySelector = $("#entitiesNav").html('');
+            if (value.length >= minlength ) 
+                {
+                   if (searchRequest != null)
+                    searchRequest.abort();
+                    searchRequest = $.ajax(
+                  {
+                    type: "GET",
+                    url: "{{ path('ajax_search') }}",
+                    data: {
+                        'q' : value
+                    },
+                    dataType: "text",
+                    success: function(msg)
+                    {
+                        //we need to check if the value is the same
+                        
+                        if (value==$(that).val())
+                        {
+                            var result = JSON.parse(msg);
+                            $.each(result, function(key, arr)
+                             {
+                                $.each(arr, function(ref, value) 
+                                {
+                                    if (key == 'cultures') 
+                                    {
+                                        if (ref != 'error') 
+                                        {
+                                             
+                                            console.log(ref , value)
+                                            entitySelector.append('<li><b>'+value[0]+'</b><a href="/showCulture/'+ref+'">'+'<img src="/uploads/'+value[1]+'" style="width: 50px; height: 50px"/>'+'</a></li>');
+                                                    
+                                                    
+                                        } else
+                                        {
+                                            entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                        }
+                                    }
+                                });
+                              });
+                        }
+                     }
+                  });
+                }
+          });
+        });
+    </script>
+  </div>
+    {% block show %}
         <div class="row" data-aos="fade-up" data-aos-delay="100">
           <div class="col-lg-3">
             <ul class="nav nav-tabs flex-column">
@@ -153,15 +226,15 @@
                                 
                             </div>
                             <div class="col-lg-4 text-center order-1 order-lg-2">
-                                <img src="uploads/{{culture.flag}}" alt="" class="img-fluid">
+                                <img src="../uploads/{{culture.flag}}" alt="" class="img-fluid">
                             </div>
                             
                         </div>
                         <p class="h6" style="color: #cda45e;">Ajouté le {{culture.getDateAjout()|date('d-m-Y')}}</p>
-                    </div>
+                      </div>
                 {%endfor%}
-              
-            </div>
+      {% endblock %}
+              </div>
           </div>
         </div>
 

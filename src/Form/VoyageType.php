@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+//use App\Entity\User;
 use App\Entity\Voyage;
 use App\Entity\Offre;
 use Symfony\Component\Form\AbstractType;
@@ -21,6 +22,12 @@ class VoyageType extends AbstractType
     {
         $builder
             ->add('id_u')
+           // ->add(user',EntityType::class,[
+             //   'class'=>User::class,
+               // 'choice_label'=>'cin',
+              //  'expanded'=>false,
+              //  'multiple'=>false
+            //])
             ->add('offre',EntityType::class,[
                 'class'=>Offre::class,
                 'choice_label'=>'titre',
@@ -30,6 +37,7 @@ class VoyageType extends AbstractType
             ->add('date_dep', DateType::class)
             ->add('heure_dep')
             ->add('destination')
+            ->add('done')
             
         ;
     }
