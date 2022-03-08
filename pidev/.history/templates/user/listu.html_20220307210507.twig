@@ -1,0 +1,50 @@
+
+{% block body %}
+       <h2 align = "center">Liste des utilisateurs</h2>
+
+       <div class="card card-info" >
+            <div class="card-header">
+              <h3 class="card-title">User index</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0">
+
+    <table class="table table-bordered table-dark">
+        <thead>
+            <tr>
+                <th>ID User </th>  &nbsp  &nbsp
+                <th>Adresses Email</th>  
+                <th>Num de CIN</th>  
+                <th>Nom de Famille</th>  
+                <th>Prénom</th>
+               
+              <br>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                  
+                <td>{{ user.email }}</td>
+                  &nbsp
+                <td>{{ user.cin }}</td>
+                  &nbsp
+                <td>{{ user.nom }}</td>
+                  &nbsp
+                <td>{{ user.prenom }}</td>
+              
+                
+            </tr>
+            <br>
+        
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

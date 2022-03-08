@@ -1,0 +1,204 @@
+{% if is_granted(['ROLE_USER']) %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Restaurantly Bootstrap Template - Index</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/Front/assets/img/favicon.png" rel="icon">
+  <link href="/Front/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/Front/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="/Front/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/Front/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/Front/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/Front/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/Front/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/Front/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/Front/assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Restaurantly - v3.7.0
+  * Template URL: https://bootstrapmade.com/restaurantly-restaurant-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-cente">
+      <nav id="navbar" class="navbar order-last order-lg-0">    
+      
+      </nav><!-- .navbar -->
+     
+
+    </div>
+  </header><!-- End Header -->
+
+  
+
+<!-- ======= Book A Table Section ======= -->
+    <section id="book-a-table" class="book-a-table">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Informations sur le compte</h2>
+          <p>Modifier votre compte Admin en quelques clics</p>
+        </div>
+
+        
+
+      
+    <!-- End Book A Table Section -->
+
+   
+<body>
+   <div class="main">
+   
+
+        <div class="container">
+
+
+   
+        <p> Email : </p> <p>{{ app.user.email }}</p>
+    {{ include('user/_form.html.twig', {'button_label': 'Confirmer'}) }}
+
+
+
+   </div>
+   </section>
+
+</body>
+  <!-- Vendor JS Files -->
+  <script src="/Front/assets/vendor/aos/aos.js"></script>
+  <script src="/Front/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/Front/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/Front/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/Front/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/Front/assets/js/main.js"></script>
+
+
+    
+
+
+
+{% else %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Modification Profil </title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="/Front/assets/img/favicon.png" rel="icon">
+  <link href="/Front/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="/Front/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="/Front/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/Front/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/Front/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/Front/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="/Front/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/Front/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="/Front/assets/css/style.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Restaurantly - v3.7.0
+  * Template URL: https://bootstrapmade.com/restaurantly-restaurant-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-cente">
+      <nav id="navbar" class="navbar order-last order-lg-0">    
+      
+      </nav><!-- .navbar -->
+     
+
+    </div>
+  </header><!-- End Header -->
+
+  
+
+<!-- ======= Book A Table Section ======= -->
+    <section id="book-a-table" class="book-a-table">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Informations sur le compte</h2>
+          <p>Modifier votre compte client en quelques clics</p>
+        </div>
+
+        
+
+      
+    <!-- End Book A Table Section -->
+
+   
+<body>
+   <div class="main">
+   
+
+        <div class="container">
+
+
+   
+        <p> Email : </p> <p>{{ app.user.email }}</p>
+    {{ include('user/_form.html.twig', {'button_label': 'Confirmer'}) }}
+
+
+
+   </div>
+   </section>
+
+</body>
+  <!-- Vendor JS Files -->
+  <script src="/Front/assets/vendor/aos/aos.js"></script>
+  <script src="/Front/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/Front/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/Front/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/Front/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/Front/assets/js/main.js"></script>
+
+
+    
+
+
+{% endif %}

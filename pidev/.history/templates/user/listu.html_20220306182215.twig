@@ -1,0 +1,32 @@
+
+{% block body %}
+       <h2 align = "center">Liste des utilisateurs</h2>
+
+    <table class="table table-bordered table-dark">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Email</th>
+                <th>Cin</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.cin }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td> <img src="{{ asset('webImage/' ~ user.photo ) }}" height="30px" width="20px" ></td>
+                </td>
+            </tr>
+        
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -3,9 +3,24 @@
 {% block title %}New User{% endblock %}
 
 {% block body %}
-    <h1>Create new User</h1>
+
+<div class="card card-info" >
+            <div class="card-header">
+              <h3 class="card-title">Create new User</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            
+</div>
+                <a class="btn btn-primary" href="{{ path('user_index') }}"><i class="fas fa-arrow-circle-left"></i></a></a>
+
 
     {{ include('user/_form.html.twig') }}
 
-    <a href="{{ path('user_index') }}">back to list</a>
+
+    
 {% endblock %}

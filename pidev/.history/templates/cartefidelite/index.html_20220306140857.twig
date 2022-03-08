@@ -1,0 +1,112 @@
+{% endblock %}{% if is_granted('ROLE_USER') %}
+    {% block body %}
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<title>404 HTML Template by Colorlib</title>
+
+	<!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:200,400,700" rel="stylesheet">
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="css/style.css" />
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+</head>
+
+<body>
+
+	<div id="notfound">
+		<div class="notfound">
+			<div class="notfound-404">
+				<h1>Oops!</h1>
+				<h2>404 - The Page can't be found</h2>
+			</div>
+			<a href="#">Go TO Homepage</a>
+		</div>
+	</div>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>
+{% endblock %}
+{% else %}
+
+{% extends 'baseadmin.html.twig' %}
+
+{% block title %}Cartefidelite index{% endblock %}
+
+{% block body %}
+    <h1>Cartefidelite index</h1>
+
+   
+ <div class="container">
+
+</script>
+
+ <div class="card card-info" >
+            <div class="card-header">
+              <h3 class="card-title">User index</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0">
+
+    <table class="table table-bordered table-dark">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Num</th>
+                <th>Nbpts</th>
+                <th>Periodevalidation</th>
+                <th>Dateexpiration</th>
+                <th>View</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cartefidelite in cartefidelites %}
+            <tr>
+                <td>{{ cartefidelite.id }}</td>
+                <td>{{ cartefidelite.num }}</td>
+                <td>{{ cartefidelite.nbpts }}</td>
+                <td>{{ cartefidelite.periodevalidation }}</td>
+                <td>{{ cartefidelite.dateexpiration ? cartefidelite.dateexpiration|date('Y-m-d') : '' }}</td>
+                <td><a class="btn btn-primary  btn-sm" href="{{ path('cartefidelite_show', {'id': cartefidelite.id}) }}"><i class="fas fa-eye"></i></a></td>
+                <td><a class="btn btn-warning  btn-sm" href="{{ path('cartefidelite_edit', {'id': cartefidelite.id}) }}"><i class="fas fa-pen"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<br>
+     <div class="col-md-12 text-center">
+        <a class="btn btn-success  btn-lg" href="{{ path('cartefidelite_new') }}"><i class="fas fa-user-plus">  </i></a>
+        </div>
+         <br>
+
+        <div class="pagination justify-content-center">
+             {{ knp_pagination_render(cartefidelites) }}
+        </div>
+{% endblock %}
+{% endif %}

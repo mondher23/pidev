@@ -1,22 +1,14 @@
  {% block body %}
-
-
-<div class="row justify-content-around custom-line">
-  
 {{ form_start(form) }}
-<div class="col-3">
+
 {{ form_row(form.q)}}
-</div>
+<br>
 
-<div class="col-3">
 {{ form_row(form.p) }}
-</div>
 
 
-<div class="col-3">
+<br>
 <button type="submit" class="btn btn-primary w=100">Chercher </button>
-</div>
-</div>
 
 {{ form_end(form) }}
 

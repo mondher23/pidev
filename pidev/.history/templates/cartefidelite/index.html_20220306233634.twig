@@ -1,0 +1,69 @@
+{% extends 'baseadmin.html.twig' %}
+
+{% block title %}Cartefidelite index{% endblock %}
+
+{% block body %}
+{% if is_granted(['ROLE_ADMIN']) %}
+    <h1>Cartefidelite index</h1>
+
+   
+ <div class="container">
+
+</script>
+
+ <div class="card card-info" >
+            <div class="card-header">
+              <h3 class="card-title">User index</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0">
+
+    <table class="table table-bordered table-dark">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Num</th>
+                <th>Nbpts</th>
+                <th>Periodevalidation</th>
+                <th>Dateexpiration</th>
+                <th>View</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cartefidelite in cartefidelites %}
+            <tr>
+                <td>{{ cartefidelite.id }}</td>
+                <td>{{ cartefidelite.num }}</td>
+                <td>{{ cartefidelite.nbpts }}</td>
+                <td>{{ cartefidelite.periodevalidation }}</td>
+                <td>{{ cartefidelite.dateexpiration ? cartefidelite.dateexpiration|date('Y-m-d') : '' }}</td>
+                <td><a class="btn btn-primary  btn-sm" href="{{ path('cartefidelite_show', {'id': cartefidelite.id}) }}"><i class="fas fa-eye"></i></a></td>
+                <td><a class="btn btn-warning  btn-sm" href="{{ path('cartefidelite_edit', {'id': cartefidelite.id}) }}"><i class="fas fa-pen"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<br>
+     <div class="col-md-12 text-center">
+        <a class="btn btn-success  btn-lg" href="{{ path('cartefidelite_new') }}"><i class="fas fa-user-plus">  </i></a>
+        </div>
+         <br>
+
+        <div class="pagination justify-content-center">
+             {{ knp_pagination_render(cartefidelites) }}
+        </div>
+
+        
+
+{% endblock %}

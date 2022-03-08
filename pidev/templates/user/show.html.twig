@@ -4,8 +4,24 @@
 
 {% block body %}
     <h1>User</h1>
+    <div class="container">
 
-    <table class="table">
+</script>
+
+ <div class="card card-info" >
+            <div class="card-header">
+              <h3 class="card-title">User index</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0">
+
+
+    <table class="table table-bordered table-dark">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -15,14 +31,14 @@
                 <th>Email</th>
                 <td>{{ user.email }}</td>
             </tr>
-            <tr>
+             <!--<tr>
                 <th>Roles</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
+            </tr>-->
+            <!--<tr>
                 <th>Password</th>
                 <td>{{ user.password }}</td>
-            </tr>
+            </tr>-->
             <tr>
                 <th>Cin</th>
                 <td>{{ user.cin }}</td>
@@ -35,20 +51,28 @@
                 <th>Prenom</th>
                 <td>{{ user.prenom }}</td>
             </tr>
-            <tr>
+            <!--<tr>
                 <th>Photo</th>
                 <td>{{ user.photo }}</td>
-            </tr>
+            </tr>-->
             <tr>
                 <th>IsVerified</th>
                 <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
             </tr>
         </tbody>
-    </table>
+    </table> <br>
+    <div class="btn-toolbar mb-3 justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
 
-    <a href="{{ path('user_index') }}">back to list</a>
+                <a class="btn btn-primary  " href="{{ path('user_index') }}"><i class="fas fa-arrow-circle-left"></i></a></a>
 
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+            </div>
+            <div class="btn-group mr-2" role="group" aria-label="Second group">
 
-    {{ include('user/_delete_form.html.twig') }}
+                <a class="btn btn-warning" href="{{ path('user_edit', {'id': user.id}) }}"><i class="fas fa-pen"></i></a>
+            </div>
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+                {{ include('user/_delete_form.html.twig') }}
+            </div>
+    
 {% endblock %}

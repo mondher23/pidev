@@ -1,0 +1,26 @@
+{% extends 'baseadmin.html.twig' %}
+
+{% block title %}New Cartefidelite{% endblock %}
+
+{% block body %}
+
+<div class="card card-info" >
+            <div class="card-header">
+              <h3 class="card-title">Create new Cartefidelite</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+</div>
+
+<a class="btn btn-primary" href="{{ path('cartefidelite_index') }}"><i class="fas fa-arrow-circle-left"></i></a></a>
+
+
+    {{ include('cartefidelite/_form.html.twig') }}
+
+
+
+{% endblock %}

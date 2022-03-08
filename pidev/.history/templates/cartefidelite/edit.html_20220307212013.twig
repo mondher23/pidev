@@ -1,0 +1,41 @@
+{% extends 'baseadmin.html.twig' %}
+
+{% block title %}Edit Cartefidelite{% endblock %}
+
+{% block body %}
+
+<div class="card card-info" >
+            <div class="card-header">
+              <h3 class="card-title">Edit User</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            
+</div>
+    
+<div class="btn-toolbar mb-3 justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" aria-label="First group">
+                <a class="btn btn-primary" href="{{ path('cartefidelite_index') }}"><i class="fas fa-arrow-circle-left"></i></a></a>
+                 </div>
+                 &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;
+                  {{ include('cartefidelite/_delete_form.html.twig') }}
+                   </div>
+                
+                 <br>
+                    <div class="btn-toolbar mb-3 justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+                          <div class="btn-group mr-2" role="group" aria-label="First group">
+                              {{ include('cartefidelite/_form.html.twig', {'button_label': 'Update'}) }}
+                         </div>
+              <br>
+
+                    <img src="{{ qr_code_url(https://classroom.google.com/)}}" style="width: 150px; height: 150px"/>
+
+
+
+
+   
+{% endblock %}
